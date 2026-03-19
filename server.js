@@ -67,35 +67,58 @@ app.get("/results", async (req, res) => {
   }
 });
 
-// Add new result
+// Add or Update result
 app.post("/add", async (req, res) => {
   try {
-    const { mid_exam, final_exam } = req.body;
+    const { student_id, name, course, mid_exam, final_exam, comments } = req.body;
     
-    // Calculate total marks
-    const totalMarks = (parseFloat(mid_exam) || 0) + (parseFloat(final_exam) || 0);
+    if (!student_id || !name) {
+      return res.status(400).json({ message: "Student ID and Name are required" });
+    }
 
-    // Calculate Grade
-    let grade = 'F';
-    if (totalMarks >= 90) grade = 'A+';
-    else if (totalMarks >= 83) grade = 'A';
-    else if (totalMarks >= 75) grade = 'B+';
-    else if (totalMarks >= 68) grade = 'B';
-    else if (totalMarks >= 60) grade = 'C+';
-    else if (totalMarks >= 50) grade = 'C';
-    else if (totalMarks >= 45) grade = 'D';
+    const mid = parseFloat(mid_exam);
+    const final = parseFloat(final_exam);
+    
+    let totalMarks = 0;
+    let grade = 'Pending';
 
-    const newStudent = new Student({
-      ...req.body,
+    // Sum scores safely
+    if (!isNaN(mid)) totalMarks += mid;
+    if (!isNaN(final)) totalMarks += final;
+
+    // Only assign a final grade if the final exam is recorded
+    if (!isNaN(final)) {
+      if (totalMarks >= 90) grade = 'A+';
+      else if (totalMarks >= 83) grade = 'A';
+      else if (totalMarks >= 75) grade = 'B+';
+      else if (totalMarks >= 68) grade = 'B';
+      else if (totalMarks >= 60) grade = 'C+';
+      else if (totalMarks >= 50) grade = 'C';
+      else if (totalMarks >= 45) grade = 'D';
+      else grade = 'F';
+    }
+
+    const updateData = {
+      name,
+      course,
       marks: totalMarks,
       grade: grade,
-      comments: req.body.comments || ""
-    });
+      comments: comments || ""
+    };
 
-    await newStudent.save();
-    res.json({ message: "Result added successfully", data: newStudent });
+    // Only add exams if they were actually provided (to avoid overwriting with 0)
+    if (!isNaN(mid)) updateData.mid_exam = mid;
+    if (!isNaN(final)) updateData.final_exam = final;
+
+    const result = await Student.findOneAndUpdate(
+      { student_id },
+      { $set: updateData },
+      { upsert: true, new: true, runValidators: true }
+    );
+
+    res.json({ message: "Result registered/updated successfully", data: result });
   } catch (err) {
-    res.status(400).json({ message: "Error adding result", error: err.message });
+    res.status(400).json({ message: "Error registering result", error: err.message });
   }
 });
 

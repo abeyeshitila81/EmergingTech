@@ -70,23 +70,23 @@ const StudentList = ({
                   </td>
                   <td className="px-6 py-4 text-center">
                     <span className="text-xs font-black text-slate-500 bg-slate-900/50 px-2 py-1 rounded-md border border-white/5">
-                      {item.mid_exam || '0'}
+                      {item.mid_exam ?? '---'}
                     </span>
                   </td>
                   <td className="px-6 py-4 text-center">
                     <span className="text-xs font-black text-slate-500 bg-slate-900/50 px-2 py-1 rounded-md border border-white/5">
-                      {item.final_exam || '0'}
+                      {(item.final_exam !== undefined && item.final_exam !== null) ? item.final_exam : '---'}
                     </span>
                   </td>
                   <td className="px-6 py-4 text-right">
-                    <span className="text-white font-black text-lg">
-                      {item.marks || '0'}
+                    <span className={`font-black text-lg ${item.grade === 'Pending' ? 'text-slate-500' : 'text-white'}`}>
+                      {item.grade === 'Pending' ? '---' : item.marks}
                       <span className="text-[10px] text-slate-500 ml-0.5 font-bold">/100</span>
                     </span>
                   </td>
                   <td className="px-6 py-4 text-center">
-                    <div className="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center border border-white/5 text-emerald-400 font-black group-hover:scale-110 transition-transform mx-auto relative group/info">
-                      {item.grade}
+                    <div className={`w-10 h-10 ${item.grade === 'Pending' ? 'bg-slate-900/30 text-slate-600' : 'bg-slate-800 text-emerald-400'} rounded-lg flex items-center justify-center border border-white/5 font-black group-hover:scale-110 transition-transform mx-auto relative group/info`}>
+                      {item.grade === 'Pending' ? '...' : item.grade}
                       {item.comments && (
                         <div className="absolute bottom-full mb-2 hidden group-hover/info:block w-48 bg-slate-900 border border-white/10 p-3 rounded-xl text-[10px] text-slate-300 shadow-2xl z-50 pointer-events-none leading-relaxed">
                           <p className="font-black text-emerald-400 uppercase tracking-widest mb-1 border-b border-white/5 pb-1">Notes</p>

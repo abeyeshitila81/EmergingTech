@@ -80,22 +80,26 @@ const Search = ({
                 </div>
                 <div className="bg-slate-950/50 p-6 rounded-3xl border border-white/5 flex flex-col items-center justify-center">
                   <p className="text-slate-500 text-[10px] uppercase font-black tracking-widest mb-1">Final Grade</p>
-                  <p className="text-5xl font-black text-emerald-400">{result.grade}</p>
+                  <p className={`text-5xl font-black ${result.grade === 'Pending' ? 'text-slate-600 animate-pulse' : 'text-emerald-400'}`}>
+                    {result.grade === 'Pending' ? '...' : result.grade}
+                  </p>
                 </div>
               </div>
 
               <div className="grid grid-cols-3 gap-4">
                 <div className="bg-slate-900/40 p-4 rounded-2xl border border-white/5 flex flex-col items-center">
                   <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">Mid Exam</span>
-                  <span className="text-xl font-bold text-white">{result.mid_exam}</span>
+                  <span className="text-xl font-bold text-white">{result.mid_exam ?? '---'}</span>
                 </div>
                 <div className="bg-slate-900/40 p-4 rounded-2xl border border-white/5 flex flex-col items-center">
                   <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">Final Exam</span>
-                  <span className="text-xl font-bold text-white">{result.final_exam}</span>
+                  <span className="text-xl font-bold text-white">{(result.final_exam !== undefined && result.final_exam !== null) ? result.final_exam : '---'}</span>
                 </div>
                 <div className="bg-gradient-to-br from-cyan-500/20 to-blue-600/20 p-4 rounded-2xl border border-cyan-500/20 flex flex-col items-center">
                   <span className="text-[10px] font-black text-cyan-500 uppercase tracking-widest mb-1">Total Score</span>
-                  <span className="text-xl font-black text-white">{result.marks}/100</span>
+                  <span className={`text-xl font-black ${result.grade === 'Pending' ? 'text-slate-500' : 'text-white'}`}>
+                    {result.grade === 'Pending' ? '---' : result.marks}/100
+                  </span>
                 </div>
               </div>
 
