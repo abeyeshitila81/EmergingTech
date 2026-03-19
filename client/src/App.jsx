@@ -22,6 +22,8 @@ function App() {
     course: '',
     mid_exam: '',
     final_exam: '',
+    quiz: '',
+    assignment: '',
     grade: '',
     comments: ''
   });
@@ -97,7 +99,7 @@ function App() {
       }
 
       setSubmitSuccess('Student result added successfully!');
-      setNewStudent({ student_id: '', name: '', course: '', mid_exam: '', final_exam: '', grade: '', comments: '' });
+      setNewStudent({ student_id: '', name: '', course: '', mid_exam: '', final_exam: '', quiz: '', assignment: '', grade: '', comments: '' });
     } catch (err) {
       setError(err.message);
     } finally {

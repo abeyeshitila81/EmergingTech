@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-
 const AdminLogin = ({ onLogin, onClose }) => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-
   const handleSubmit = (e) => {
     e.preventDefault();
     const adminPass = import.meta.env.VITE_ADMIN_PASSWORD || 'admin123';
@@ -15,10 +13,9 @@ const AdminLogin = ({ onLogin, onClose }) => {
       setPassword('');
     }
   };
-
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
-      <div 
+      <div
         className="w-full max-w-md bg-white/5 border border-white/10 rounded-3xl p-8 shadow-2xl animate-in fade-in zoom-in duration-300"
         onClick={(e) => e.stopPropagation()}
       >
@@ -31,7 +28,6 @@ const AdminLogin = ({ onLogin, onClose }) => {
           <h2 className="text-2xl font-black text-white">Admin Access</h2>
           <p className="text-slate-400 text-sm mt-1">Enter password to unlock management features</p>
         </div>
-
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-2">
             <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Password</label>
@@ -45,7 +41,6 @@ const AdminLogin = ({ onLogin, onClose }) => {
             />
             {error && <p className="text-rose-400 text-xs font-bold mt-2 ml-1">{error}</p>}
           </div>
-
           <div className="flex gap-3">
             <button
               type="button"
@@ -66,5 +61,4 @@ const AdminLogin = ({ onLogin, onClose }) => {
     </div>
   );
 };
-
 export default AdminLogin;

@@ -62,6 +62,27 @@ const SubmitForm = ({
               />
             </div>
             <div>
+              <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 ml-1">Quiz Score</label>
+              <input
+                type="number"
+                className="w-full bg-slate-900/50 border border-slate-800 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-fuchsia-500/30 transition-all font-medium"
+                value={newStudent.quiz}
+                onChange={(e) => setNewStudent({...newStudent, quiz: e.target.value})}
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 ml-1">Assignment Score</label>
+              <input
+                type="number"
+                className="w-full bg-slate-900/50 border border-slate-800 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-fuchsia-500/30 transition-all font-medium"
+                value={newStudent.assignment}
+                onChange={(e) => setNewStudent({...newStudent, assignment: e.target.value})}
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
               <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 ml-1">Final Exam</label>
               <input
                 type="number"

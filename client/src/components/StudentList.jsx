@@ -41,6 +41,8 @@ const StudentList = ({
                 <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-left">Course</th>
                 <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Date Added</th>
                 <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Mid</th>
+                <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Quiz</th>
+                <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Assig</th>
                 <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Final</th>
                 <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-right">Total</th>
                 <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Grade</th>
@@ -71,6 +73,16 @@ const StudentList = ({
                   <td className="px-6 py-4 text-center">
                     <span className="text-xs font-black text-slate-500 bg-slate-900/50 px-2 py-1 rounded-md border border-white/5">
                       {item.mid_exam ?? '---'}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 text-center">
+                    <span className="text-xs font-black text-slate-500 bg-slate-900/50 px-2 py-1 rounded-md border border-white/5">
+                      {item.quiz ?? '---'}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 text-center">
+                    <span className="text-xs font-black text-slate-500 bg-slate-900/50 px-2 py-1 rounded-md border border-white/5">
+                      {item.assignment ?? '---'}
                     </span>
                   </td>
                   <td className="px-6 py-4 text-center">
