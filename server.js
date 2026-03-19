@@ -76,18 +76,25 @@ app.post("/add", async (req, res) => {
       return res.status(400).json({ message: "Student ID and Name are required" });
     }
 
+    // 1. Fetch existing student to preserve other scores
+    const existingStudent = await Student.findOne({ student_id });
+
+    // 2. Parse scores (prioritizing new inputs, falling back to existing)
     const mid = parseFloat(mid_exam);
     const final = parseFloat(final_exam);
     
+    // Determine combined scores
+    const combinedMid = !isNaN(mid) ? mid : (existingStudent?.mid_exam || null);
+    const combinedFinal = !isNaN(final) ? final : (existingStudent?.final_exam || null);
+
+    // 3. Calculate total marks
     let totalMarks = 0;
+    if (combinedMid !== null) totalMarks += combinedMid;
+    if (combinedFinal !== null) totalMarks += combinedFinal;
+
+    // 4. Calculate Grade (if final is recorded)
     let grade = 'Pending';
-
-    // Sum scores safely
-    if (!isNaN(mid)) totalMarks += mid;
-    if (!isNaN(final)) totalMarks += final;
-
-    // Only assign a final grade if the final exam is recorded
-    if (!isNaN(final)) {
+    if (combinedFinal !== null) {
       if (totalMarks >= 90) grade = 'A+';
       else if (totalMarks >= 83) grade = 'A';
       else if (totalMarks >= 75) grade = 'B+';
@@ -103,12 +110,11 @@ app.post("/add", async (req, res) => {
       course,
       marks: totalMarks,
       grade: grade,
-      comments: comments || ""
+      comments: comments !== undefined ? comments : (existingStudent?.comments || "")
     };
 
-    // Only add exams if they were actually provided (to avoid overwriting with 0)
-    if (!isNaN(mid)) updateData.mid_exam = mid;
-    if (!isNaN(final)) updateData.final_exam = final;
+    if (combinedMid !== null) updateData.mid_exam = combinedMid;
+    if (combinedFinal !== null) updateData.final_exam = combinedFinal;
 
     const result = await Student.findOneAndUpdate(
       { student_id },
