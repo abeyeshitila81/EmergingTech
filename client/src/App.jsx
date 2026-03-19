@@ -1,0 +1,168 @@
+import React, { useState, useEffect } from 'react';
+import Header from './components/Header';
+import Search from './components/Search';
+import SubmitForm from './components/SubmitForm';
+import StudentList from './components/StudentList';
+import AdminLogin from './components/AdminLogin';
+
+function App() {
+  const [view, setView] = useState('search'); // 'search', 'submit', or 'list'
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
+  const [name, setName] = useState('');
+  const [studentId, setStudentId] = useState('');
+  const [result, setResult] = useState(null);
+  const [resultsList, setResultsList] = useState([]);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const [newStudent, setNewStudent] = useState({
+    student_id: '',
+    name: '',
+    course: '',
+    mid_exam: '',
+    final_exam: '',
+    grade: '',
+    comments: ''
+  });
+  const [submitSuccess, setSubmitSuccess] = useState('');
+
+  // Fetch all results when view changes to 'list'
+  useEffect(() => {
+    if (view === 'list') {
+      fetchResults();
+    }
+  }, [view]);
+
+  const fetchResults = async () => {
+    setLoading(true);
+    setError('');
+    try {
+      const apiBase = import.meta.env.VITE_API_BASE_URL || `http://${window.location.hostname}:5001`;
+      const response = await fetch(`${apiBase}/results`);
+      if (!response.ok) throw new Error('Failed to fetch results');
+      const data = await response.json();
+      setResultsList(data);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getResult = async (e) => {
+    e.preventDefault();
+    if (!name || !studentId) {
+      setError('Please enter both Name and Student ID');
+      return;
+    }
+
+    setLoading(true);
+    setError('');
+    setResult(null);
+
+    try {
+      const apiBase = import.meta.env.VITE_API_BASE_URL || `http://${window.location.hostname}:5001`;
+      const response = await fetch(`${apiBase}/result?name=${name}&id=${studentId}`);
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Result not found');
+      }
+      const data = await response.json();
+      setResult(data);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleAddResult = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+    setSubmitSuccess('');
+
+    try {
+      const apiBase = import.meta.env.VITE_API_BASE_URL || `http://${window.location.hostname}:5001`;
+      const response = await fetch(`${apiBase}/add`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newStudent),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to add result');
+      }
+
+      setSubmitSuccess('Student result added successfully!');
+      setNewStudent({ student_id: '', name: '', course: '', mid_exam: '', final_exam: '', grade: '', comments: '' });
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="min-h-screen p-6 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 font-sans">
+      <div className="max-w-4xl mx-auto py-12">
+        <Header 
+          view={view} 
+          setView={setView} 
+          isAdmin={isAdmin}
+          onLoginClick={() => setShowLogin(true)}
+          onLogout={() => {
+            setIsAdmin(false);
+            setView('search');
+          }}
+        />
+
+        {showLogin && (
+          <AdminLogin 
+            onLogin={() => setIsAdmin(true)} 
+            onClose={() => setShowLogin(false)} 
+          />
+        )}
+
+        <div className="max-w-3xl mx-auto">
+          {view === 'search' && (
+            <Search 
+              loading={loading}
+              error={error}
+              name={name}
+              setName={setName}
+              studentId={studentId}
+              setStudentId={setStudentId}
+              getResult={getResult}
+              result={result}
+            />
+          )}
+
+          {view === 'submit' && isAdmin && (
+            <SubmitForm 
+              loading={loading}
+              error={error}
+              submitSuccess={submitSuccess}
+              newStudent={newStudent}
+              setNewStudent={setNewStudent}
+              handleAddResult={handleAddResult}
+            />
+          )}
+
+          {view === 'list' && isAdmin && (
+            <StudentList 
+              loading={loading}
+              error={error}
+              resultsList={resultsList}
+              fetchResults={fetchResults}
+            />
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default App;
