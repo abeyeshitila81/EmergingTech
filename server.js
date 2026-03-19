@@ -7,6 +7,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Root route for health check
+app.get("/", (req, res) => {
+  res.send("EmergingTech Backend is LIVE and connected to MongoDB Atlas!");
+});
+
 // Connect to MongoDB
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/emergingtech";
 mongoose.connect(MONGODB_URI)
