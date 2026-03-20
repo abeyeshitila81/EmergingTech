@@ -43,7 +43,8 @@ function App() {
     setLoading(true);
     setError('');
     try {
-      const apiBase = import.meta.env.VITE_API_BASE_URL || `http://${window.location.hostname}:5001`;
+      const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+      const apiBase = import.meta.env.VITE_API_BASE_URL || (isLocal ? `http://${window.location.hostname}:5001` : '');
       const response = await fetch(`${apiBase}/results`, {
         headers: { 'x-admin-password': adminPassword }
       });
@@ -69,7 +70,8 @@ function App() {
     setResult(null);
 
     try {
-      const apiBase = import.meta.env.VITE_API_BASE_URL || `http://${window.location.hostname}:5001`;
+      const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+      const apiBase = import.meta.env.VITE_API_BASE_URL || (isLocal ? `http://${window.location.hostname}:5001` : '');
       const response = await fetch(`${apiBase}/result?name=${name}&id=${studentId}`);
       if (!response.ok) {
         const errorData = await response.json();
@@ -91,7 +93,8 @@ function App() {
     setSubmitSuccess('');
 
     try {
-      const apiBase = import.meta.env.VITE_API_BASE_URL || `http://${window.location.hostname}:5001`;
+      const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+      const apiBase = import.meta.env.VITE_API_BASE_URL || (isLocal ? `http://${window.location.hostname}:5001` : '');
       const response = await fetch(`${apiBase}/add`, {
         method: 'POST',
         headers: { 
@@ -123,7 +126,8 @@ function App() {
     if (!window.confirm('Are you sure you want to delete this record?')) return;
     setLoading(true);
     try {
-      const apiBase = import.meta.env.VITE_API_BASE_URL || `http://${window.location.hostname}:5001`;
+      const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+      const apiBase = import.meta.env.VITE_API_BASE_URL || (isLocal ? `http://${window.location.hostname}:5001` : '');
       const response = await fetch(`${apiBase}/delete/${sid}`, { 
         method: 'DELETE',
         headers: { 'x-admin-password': adminPassword }
