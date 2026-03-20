@@ -166,7 +166,7 @@ function App() {
 
   return (
     <div className="min-h-screen p-6 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 font-sans">
-      <div className="max-w-4xl mx-auto py-12">
+      <div className={`mx-auto py-12 transition-all duration-700 ${view === 'list' ? 'max-w-[1400px]' : 'max-w-4xl'}`}>
         <Header 
           view={view} 
           setView={setView} 
@@ -193,7 +193,7 @@ function App() {
           />
         )}
 
-        <div className="max-w-3xl mx-auto">
+        <div className={`mx-auto transition-all duration-700 ${view === 'list' ? 'max-w-full' : 'max-w-3xl'}`}>
           {view === 'search' && (
             <Search 
               loading={loading}
