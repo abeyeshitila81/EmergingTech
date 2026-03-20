@@ -60,7 +60,10 @@ function App() {
         method: 'POST',
         headers: { 'x-admin-password': adminPassword }
       });
-      if (!response.ok) throw new Error('Failed to toggle public access');
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to toggle public access');
+      }
       const data = await response.json();
       setPublicAccess(data.publicAccess);
     } catch (err) {

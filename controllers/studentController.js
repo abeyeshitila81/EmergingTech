@@ -10,6 +10,8 @@ const getSetting = async (key, defaultValue) => {
   return setting;
 };
 
+const adminPassword = process.env.VITE_ADMIN_PASSWORD || process.env.ADMIN_PASSWORD || "admin123";
+
 exports.getPublicAccess = async (req, res) => {
   try {
     const setting = await getSetting("public_access", false);
