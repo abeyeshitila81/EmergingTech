@@ -11,7 +11,7 @@ const SubmitForm = ({
   onCancel 
 }) => {
   return (
-    <div className="max-w-xl mx-auto">
+    <div className="max-w-3xl mx-auto">
       {/* Submission Form */}
       <div className="backdrop-blur-2xl bg-white/5 p-10 rounded-[2.5rem] border border-white/10 shadow-3xl relative overflow-hidden group animate-in fade-in zoom-in-95 duration-500">
         <div className="absolute -top-24 -right-24 w-48 h-48 bg-fuchsia-500/10 rounded-full blur-3xl"></div>
