@@ -54,12 +54,14 @@ const Header = ({ view, setView, isAdmin, publicAccess, onTogglePublicAccess, on
             SEARCH
           </button>
           
-          <button
-            onClick={() => setView('list')}
-            className={`px-6 py-2.5 rounded-xl text-sm font-black transition-all ${view === 'list' ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg shadow-emerald-500/25' : 'text-slate-500 hover:text-slate-300'}`}
-          >
-            DIRECTORY
-          </button>
+          {(isAdmin || publicAccess) && (
+            <button
+              onClick={() => setView('list')}
+              className={`px-6 py-2.5 rounded-xl text-sm font-black transition-all ${view === 'list' ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg shadow-emerald-500/25' : 'text-slate-500 hover:text-slate-300'}`}
+            >
+              DIRECTORY
+            </button>
+          )}
 
           {isAdmin && (
             <button

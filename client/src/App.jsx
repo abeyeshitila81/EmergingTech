@@ -79,6 +79,13 @@ function App() {
     localStorage.setItem('adminPassword', adminPassword);
   }, [isAdmin, adminPassword]);
 
+  // Redirect if view becomes restricted
+  useEffect(() => {
+    if (view === 'list' && !isAdmin && !publicAccess) {
+      setView('search');
+    }
+  }, [view, isAdmin, publicAccess]);
+
   // Fetch all results when view changes to 'list'
   useEffect(() => {
     setError(''); // Clear any previous errors when switching views
