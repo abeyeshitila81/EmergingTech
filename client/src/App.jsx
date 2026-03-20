@@ -113,7 +113,18 @@ function App() {
     }
   };
 
-  const getResult = async (e) => {
+  const resetForm = () => {
+    setNewStudent({ 
+      student_id: '', name: '', course: '', 
+      department: 'pharmacy', batch: '2016', 
+      mid_exam: '', final_exam: '', quiz: '', 
+      assignment: '', grade: '', comments: '' 
+    });
+    setError('');
+    setSubmitSuccess('');
+  };
+
+  const handleSearch = async (e) => {
     e.preventDefault();
     if (!name || !studentId) {
       setError('Please enter both Name and Student ID');
@@ -141,7 +152,7 @@ function App() {
     }
   };
 
-  const handleAddResult = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
@@ -165,7 +176,7 @@ function App() {
       }
 
       setSubmitSuccess(isEditing ? 'Student result updated successfully!' : 'Student result added successfully!');
-      setNewStudent({ student_id: '', name: '', course: '', department: 'pharmacy', batch: '2016', mid_exam: '', final_exam: '', quiz: '', assignment: '', grade: '', comments: '' });
+      resetForm();
       if (isEditing) {
         setIsEditing(false);
         setView('list');
@@ -252,7 +263,7 @@ function App() {
               studentId={studentId}
               setStudentId={setStudentId}
               getResult={handleSearch}
-              result={searchResult}
+              result={result}
             />
           )}
 
