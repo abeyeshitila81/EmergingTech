@@ -8,6 +8,7 @@ import AdminLogin from './components/AdminLogin';
 function App() {
   const [view, setView] = useState('search'); // 'search', 'submit', or 'list'
   const [isAdmin, setIsAdmin] = useState(false);
+  const [adminPassword, setAdminPassword] = useState('');
   const [showLogin, setShowLogin] = useState(false);
   const [name, setName] = useState('');
   const [studentId, setStudentId] = useState('');
@@ -15,6 +16,7 @@ function App() {
   const [resultsList, setResultsList] = useState([]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
   const [newStudent, setNewStudent] = useState({
     student_id: '',
@@ -41,7 +43,9 @@ function App() {
     setError('');
     try {
       const apiBase = import.meta.env.VITE_API_BASE_URL || `http://${window.location.hostname}:5001`;
-      const response = await fetch(`${apiBase}/results`);
+      const response = await fetch(`${apiBase}/results`, {
+        headers: { 'x-admin-password': adminPassword }
+      });
       if (!response.ok) throw new Error('Failed to fetch results');
       const data = await response.json();
       setResultsList(data);
@@ -89,7 +93,10 @@ function App() {
       const apiBase = import.meta.env.VITE_API_BASE_URL || `http://${window.location.hostname}:5001`;
       const response = await fetch(`${apiBase}/add`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'x-admin-password': adminPassword
+        },
         body: JSON.stringify(newStudent),
       });
 
@@ -98,13 +105,48 @@ function App() {
         throw new Error(errorData.message || 'Failed to add result');
       }
 
-      setSubmitSuccess('Student result added successfully!');
+      setSubmitSuccess(isEditing ? 'Student result updated successfully!' : 'Student result added successfully!');
       setNewStudent({ student_id: '', name: '', course: '', mid_exam: '', final_exam: '', quiz: '', assignment: '', grade: '', comments: '' });
+      if (isEditing) {
+        setIsEditing(false);
+        setView('list');
+      }
     } catch (err) {
       setError(err.message);
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleDelete = async (sid) => {
+    if (!window.confirm('Are you sure you want to delete this record?')) return;
+    setLoading(true);
+    try {
+      const apiBase = import.meta.env.VITE_API_BASE_URL || `http://${window.location.hostname}:5001`;
+      const response = await fetch(`${apiBase}/delete/${sid}`, { 
+        method: 'DELETE',
+        headers: { 'x-admin-password': adminPassword }
+      });
+      if (!response.ok) throw new Error('Failed to delete student');
+      fetchResults();
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleEdit = (student) => {
+    setNewStudent({
+      ...student,
+      mid_exam: student.mid_exam || '',
+      final_exam: student.final_exam || '',
+      quiz: student.quiz || '',
+      assignment: student.assignment || '',
+      comments: student.comments || ''
+    });
+    setIsEditing(true);
+    setView('submit');
   };
 
   return (
@@ -117,13 +159,17 @@ function App() {
           onLoginClick={() => setShowLogin(true)}
           onLogout={() => {
             setIsAdmin(false);
+            setAdminPassword('');
             setView('search');
           }}
         />
 
         {showLogin && (
           <AdminLogin 
-            onLogin={() => setIsAdmin(true)} 
+            onLogin={(pass) => {
+              setIsAdmin(true);
+              setAdminPassword(pass);
+            }} 
             onClose={() => setShowLogin(false)} 
           />
         )}
@@ -150,6 +196,12 @@ function App() {
               newStudent={newStudent}
               setNewStudent={setNewStudent}
               handleAddResult={handleAddResult}
+              isEditing={isEditing}
+              onCancel={() => {
+                setIsEditing(false);
+                setNewStudent({ student_id: '', name: '', course: '', mid_exam: '', final_exam: '', quiz: '', assignment: '', grade: '', comments: '' });
+                setView('list');
+              }}
             />
           )}
 
@@ -159,6 +211,8 @@ function App() {
               error={error}
               resultsList={resultsList}
               fetchResults={fetchResults}
+              onDelete={handleDelete}
+              onEdit={handleEdit}
             />
           )}
         </div>

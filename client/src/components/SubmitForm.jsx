@@ -6,7 +6,9 @@ const SubmitForm = ({
   submitSuccess, 
   newStudent, 
   setNewStudent, 
-  handleAddResult 
+  handleAddResult,
+  isEditing,
+  onCancel 
 }) => {
   return (
     <div className="max-w-xl mx-auto">
@@ -14,9 +16,23 @@ const SubmitForm = ({
       <div className="backdrop-blur-2xl bg-white/5 p-10 rounded-[2.5rem] border border-white/10 shadow-3xl relative overflow-hidden group animate-in fade-in zoom-in-95 duration-500">
         <div className="absolute -top-24 -right-24 w-48 h-48 bg-fuchsia-500/10 rounded-full blur-3xl"></div>
         
-        <h3 className="text-2xl font-black text-white mb-8 relative z-10 flex items-center">
-          <span className="w-8 h-8 bg-fuchsia-500 rounded-lg mr-3 flex items-center justify-center text-sm shadow-lg shadow-fuchsia-500/40 text-white">✓</span>
-          New Achievement Registry
+        <h3 className="text-2xl font-black text-white mb-8 relative z-10 flex items-center justify-between">
+          <div className="flex items-center">
+            <span className={`w-8 h-8 ${isEditing ? 'bg-blue-500 shadow-blue-500/40' : 'bg-fuchsia-500 shadow-fuchsia-500/40'} rounded-lg mr-3 flex items-center justify-center text-sm text-white transition-colors`}>
+              {isEditing ? '✎' : '✓'}
+            </span>
+            {isEditing ? 'Update achievement' : 'New Achievement Registry'}
+          </div>
+          {isEditing && (
+            <button 
+              onClick={onCancel}
+              className="text-slate-500 hover:text-white transition-colors"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          )}
         </h3>
 
         <form onSubmit={handleAddResult} className="relative z-10 space-y-5">
@@ -112,13 +128,24 @@ const SubmitForm = ({
             />
           </div>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-gradient-to-r from-fuchsia-600 to-purple-600 hover:scale-[1.02] active:scale-[0.98] text-white font-black py-4.5 rounded-2xl shadow-xl shadow-fuchsia-900/20 transition-all mt-4"
-          >
-            {loading ? 'Submitting...' : 'REGISTER ACHIEVEMENT'}
-          </button>
+          <div className="flex gap-4 mt-4">
+            {isEditing && (
+              <button
+                type="button"
+                onClick={onCancel}
+                className="flex-1 bg-slate-800 hover:bg-slate-700 text-white font-bold py-4.5 rounded-2xl transition-all"
+              >
+                CANCEL
+              </button>
+            )}
+            <button
+              type="submit"
+              disabled={loading}
+              className={`flex-[2] bg-gradient-to-r ${isEditing ? 'from-blue-600 to-cyan-600 shadow-blue-900/20' : 'from-fuchsia-600 to-purple-600 shadow-fuchsia-900/20'} hover:scale-[1.02] active:scale-[0.98] text-white font-black py-4.5 rounded-2xl shadow-xl transition-all`}
+            >
+              {loading ? 'Processing...' : isEditing ? 'UPDATE RECORD' : 'REGISTER ACHIEVEMENT'}
+            </button>
+          </div>
         </form>
 
         {submitSuccess && (

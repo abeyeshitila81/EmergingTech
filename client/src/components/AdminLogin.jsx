@@ -6,7 +6,7 @@ const AdminLogin = ({ onLogin, onClose }) => {
     e.preventDefault();
     const adminPass = import.meta.env.VITE_ADMIN_PASSWORD || 'admin123';
     if (password === adminPass) {
-      onLogin();
+      onLogin(password);
       onClose();
     } else {
       setError('Invalid admin password');

@@ -1,4 +1,5 @@
 import React from 'react';
+import { generateResultPDF } from '../utils/pdfGenerator';
 const Search = ({
   loading,
   error,
@@ -56,7 +57,16 @@ const Search = ({
       {result && (
         <div className="animate-in fade-in slide-in-from-bottom-8 duration-700">
           <div className="backdrop-blur-2xl bg-emerald-500/5 p-10 rounded-[2.5rem] border border-emerald-500/20 shadow-3xl overflow-hidden relative group">
-            <div className="absolute top-8 right-8">
+            <div className="absolute top-8 right-8 flex gap-2">
+              <button 
+                onClick={() => generateResultPDF(result)}
+                className="bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-all text-[10px] font-black px-4 py-1.5 rounded-full border border-emerald-500/30 uppercase tracking-[0.2em] flex items-center"
+              >
+                <svg className="w-3 h-3 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                Download PDF
+              </button>
               <div className="bg-emerald-500/20 text-emerald-400 text-[10px] font-black px-4 py-1.5 rounded-full border border-emerald-500/30 uppercase tracking-[0.2em]">
                 Verified Result
               </div>

@@ -1,4 +1,5 @@
 const Student = require("../models/Student");
+const adminPassword = process.env.VITE_ADMIN_PASSWORD || "admin123";
 
 // Get result by name AND student ID
 exports.getResult = async (req, res) => {
@@ -11,7 +12,7 @@ exports.getResult = async (req, res) => {
   try {
     const result = await Student.findOne({
       student_id: id,
-      name: { $regex: new RegExp(`^${name}$`, "i") }
+      name: { $regex: new RegExp(name, "i") }
     });
 
     if (result) {
@@ -26,6 +27,10 @@ exports.getResult = async (req, res) => {
 
 // Get all results
 exports.getAllResults = async (req, res) => {
+  const authHeader = req.headers['x-admin-password'];
+  if (authHeader !== adminPassword) {
+    return res.status(401).json({ message: "Unauthorized: Admin access required" });
+  }
   try {
     const results = await Student.find().sort({ createdAt: -1 });
     res.json(results);
@@ -36,6 +41,10 @@ exports.getAllResults = async (req, res) => {
 
 // Add or Update result
 exports.addOrUpdateResult = async (req, res) => {
+  const authHeader = req.headers['x-admin-password'];
+  if (authHeader !== adminPassword) {
+    return res.status(401).json({ message: "Unauthorized: Admin access required" });
+  }
   try {
     const { student_id, name, course, mid_exam, final_exam, quiz, assignment, comments } = req.body;
     
@@ -95,5 +104,23 @@ exports.addOrUpdateResult = async (req, res) => {
     res.json({ message: "Result registered/updated successfully", data: result });
   } catch (err) {
     res.status(400).json({ message: "Error registering result", error: err.message });
+  }
+};
+
+// Delete result
+exports.deleteResult = async (req, res) => {
+  const authHeader = req.headers['x-admin-password'];
+  if (authHeader !== adminPassword) {
+    return res.status(401).json({ message: "Unauthorized: Admin access required" });
+  }
+  try {
+    const { id } = req.params;
+    const result = await Student.findOneAndDelete({ student_id: id });
+    if (!result) {
+      return res.status(404).json({ message: "Student record not found" });
+    }
+    res.json({ message: "Student record deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ message: "Error deleting record", error: err.message });
   }
 };
