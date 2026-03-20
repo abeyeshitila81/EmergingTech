@@ -16,7 +16,7 @@ const StudentList = ({ resultsList, loading, error, fetchResults, onDelete, onEd
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <h2 className="text-2xl font-bold text-white mb-1">Student Directory</h2>
-            <p className="text-slate-400 text-sm">Manage all registered students and results</p>
+            <p className="text-slate-400 text-sm">Managing {filteredResults.length} registered students</p>
           </div>
           <button
             onClick={fetchResults}
@@ -79,6 +79,12 @@ const StudentList = ({ resultsList, loading, error, fetchResults, onDelete, onEd
           </div>
         </div>
       </div>
+
+      {error && (
+        <div className="bg-rose-500/10 border border-rose-500/20 rounded-2xl p-4 text-rose-400 text-sm font-medium text-center animate-in fade-in duration-300">
+          ⚠️ {error}
+        </div>
+      )}
 
       {loading && resultsList.length === 0 ? (
         <div className="text-center py-20 bg-white/5 rounded-[2.5rem] border border-white/10 border-dashed">
