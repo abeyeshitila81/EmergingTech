@@ -25,7 +25,7 @@ const Search = ({
                 <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 ml-1">Full Name</label>
                 <input
                   type="text"
-                  placeholder="Ex. Kebede"
+                  placeholder="Ex. John"
                   className="w-full bg-slate-900/50 border border-slate-800 rounded-2xl px-5 py-4 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-cyan-500/30 transition-all font-medium"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
@@ -71,7 +71,7 @@ const Search = ({
           <div className="backdrop-blur-2xl bg-emerald-500/5 p-6 md:p-10 rounded-[2.5rem] border border-emerald-500/20 shadow-3xl overflow-hidden relative group">
             {/* Top Back Button - High Visibility */}
             <div className="mb-6">
-              <button 
+              <button
                 onClick={onBack}
                 className="inline-flex items-center gap-2 px-6 py-2.5 bg-white/10 hover:bg-white/20 text-white text-sm font-bold rounded-xl border border-white/20 transition-all active:scale-95 group/back"
               >
@@ -101,9 +101,9 @@ const Search = ({
                   </div>
                 </div>
               </div>
-              
+
               <div className="flex flex-wrap gap-2">
-                <button 
+                <button
                   onClick={() => generateResultPDF(result)}
                   className="bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-all text-[9px] font-black px-3 py-1.5 rounded-full border border-emerald-500/30 uppercase tracking-widest flex items-center"
                 >
@@ -173,7 +173,7 @@ const Search = ({
 
               {/* Bottom Back Button - For convenient exit after reading all content */}
               <div className="pt-6 border-t border-white/5 mt-8">
-                <button 
+                <button
                   onClick={onBack}
                   className="w-full bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 font-bold py-4 rounded-2xl border border-emerald-500/20 transition-all flex items-center justify-center gap-3 group/back-bottom"
                 >
