@@ -33,6 +33,7 @@ function App() {
 
   // Fetch all results when view changes to 'list'
   useEffect(() => {
+    setError(''); // Clear any previous errors when switching views
     if (view === 'list') {
       fetchResults();
     }
