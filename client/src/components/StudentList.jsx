@@ -117,7 +117,7 @@ const StudentList = ({ resultsList, loading, error, fetchResults, onDelete, onEd
             </thead>
             <tbody className="divide-y divide-white/5">
               {filteredResults.map((student, index) => (
-                <tr key={student._id} className="border-b border-slate-700/50 hover:bg-white/5 transition-colors group">
+                <tr key={student._id} className="hover:bg-white/5 transition-colors group">
                   <td className="px-6 py-4 text-center">
                     <span className="text-[10px] font-black text-slate-600 bg-slate-900/30 w-6 h-6 flex items-center justify-center rounded-full mx-auto border border-white/5">
                       {index + 1}
@@ -126,7 +126,9 @@ const StudentList = ({ resultsList, loading, error, fetchResults, onDelete, onEd
                   <td className="px-6 py-4">
                     <p className="text-slate-500 text-xs font-black tracking-widest uppercase">{student.student_id || '---'}</p>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-white">{student.name}</td>
+                  <td className="px-6 py-4">
+                    <p className="text-white font-bold">{student.name || '---'}</p>
+                  </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex flex-col gap-1">
                       <span className={`px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider w-fit ${student.department === 'pharmacy' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-blue-500/10 text-blue-400 border border-blue-500/20'}`}>
@@ -135,7 +137,9 @@ const StudentList = ({ resultsList, loading, error, fetchResults, onDelete, onEd
                       <span className="text-[10px] text-slate-500 font-bold ml-1">Batch: {student.batch || '2016'}</span>
                     </div>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-300">{student.course}</td>
+                  <td className="px-6 py-4">
+                    <p className="text-slate-400 text-sm font-medium">{student.course || '---'}</p>
+                  </td>
                   <td className="px-6 py-4 text-center">
                     <p className="text-slate-500 text-[10px] font-bold">
                       {student.createdAt ? new Date(student.createdAt).toLocaleDateString() : '---'}
