@@ -64,6 +64,12 @@ const StudentList = ({ resultsList, loading, error, fetchResults, onDelete, onEd
               2016
             </button>
             <button 
+              onClick={() => setBatchFilter('2017')}
+              className={`px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all ${batchFilter === '2017' ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-500 hover:text-slate-300'}`}
+            >
+              2017
+            </button>
+            <button 
               onClick={() => setBatchFilter('2018')}
               className={`px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all ${batchFilter === '2018' ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-500 hover:text-slate-300'}`}
             >

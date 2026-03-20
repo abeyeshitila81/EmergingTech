@@ -87,6 +87,7 @@ const SubmitForm = ({
                 className="w-full bg-slate-900/50 border border-slate-800 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-fuchsia-500/30 transition-all font-medium appearance-none"
               >
                 <option value="2016">2016</option>
+                <option value="2017">2017</option>
                 <option value="2018">2018</option>
                 <option value="2020">2020</option>
               </select>
