@@ -9,51 +9,62 @@ const Search = ({
   studentId,
   setStudentId,
   getResult,
-  result
+  result,
+  onBack
 }) => {
   return (
     <div className="space-y-8 max-w-xl mx-auto">
-      {/* Search Card */}
-      <div className="backdrop-blur-2xl bg-white/5 p-10 rounded-[2.5rem] border border-white/10 shadow-3xl relative overflow-hidden group">
-        <div className="absolute -top-24 -left-24 w-48 h-48 bg-cyan-500/10 rounded-full blur-3xl group-hover:bg-cyan-500/20 transition-all duration-700"></div>
+      {/* Search Card - Hidden when result is shown for cleaner focus */}
+      {!result && (
+        <div className="backdrop-blur-2xl bg-white/5 p-10 rounded-[2.5rem] border border-white/10 shadow-3xl relative overflow-hidden group">
+          <div className="absolute -top-24 -left-24 w-48 h-48 bg-cyan-500/10 rounded-full blur-3xl group-hover:bg-cyan-500/20 transition-all duration-700"></div>
 
-        <form onSubmit={getResult} className="relative z-10 space-y-6">
-          <div className="space-y-4">
-            <div>
-              <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 ml-1">Full Name</label>
-              <input
-                type="text"
-                placeholder="Ex. Kebede"
-                className="w-full bg-slate-900/50 border border-slate-800 rounded-2xl px-5 py-4 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-cyan-500/30 transition-all"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
+          <form onSubmit={getResult} className="relative z-10 space-y-6">
+            <div className="space-y-4">
+              <div>
+                <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 ml-1">Full Name</label>
+                <input
+                  type="text"
+                  placeholder="Ex. Kebede"
+                  className="w-full bg-slate-900/50 border border-slate-800 rounded-2xl px-5 py-4 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-cyan-500/30 transition-all font-medium"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 ml-1">Student ID</label>
+                <input
+                  type="text"
+                  placeholder="Ex. 101"
+                  className="w-full bg-slate-900/50 border border-slate-800 rounded-2xl px-5 py-4 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-cyan-500/30 transition-all font-medium"
+                  value={studentId}
+                  onChange={(e) => setStudentId(e.target.value)}
+                />
+              </div>
             </div>
-            <div>
-              <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 ml-1">Student ID</label>
-              <input
-                type="text"
-                placeholder="Ex. 101"
-                className="w-full bg-slate-900/50 border border-slate-800 rounded-2xl px-5 py-4 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-cyan-500/30 transition-all"
-                value={studentId}
-                onChange={(e) => setStudentId(e.target.value)}
-              />
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:scale-[1.02] active:scale-[0.98] text-white font-black py-4.5 rounded-2xl shadow-xl shadow-cyan-900/20 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+            >
+              {loading ? 'Processing...' : (
+                <>
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                  <span>View Result</span>
+                </>
+              )}
+            </button>
+          </form>
+          {error && (
+            <div className="mt-8 p-4 bg-red-500/5 border border-red-500/20 rounded-2xl text-red-400 text-sm font-medium text-center">
+              {error}
             </div>
-          </div>
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:scale-[1.02] active:scale-[0.98] text-white font-black py-4.5 rounded-2xl shadow-xl shadow-cyan-900/20 transition-all disabled:opacity-50"
-          >
-            {loading ? 'Processing...' : 'View'}
-          </button>
-        </form>
-        {error && (
-          <div className="mt-8 p-4 bg-red-500/5 border border-red-500/20 rounded-2xl text-red-400 text-sm font-medium text-center">
-            {error}
-          </div>
-        )}
-      </div>
+          )}
+        </div>
+      )}
+
       {/* Result Display */}
       {result && (
         <div className="animate-in fade-in slide-in-from-bottom-8 duration-700">
@@ -95,6 +106,17 @@ const Search = ({
             </div>
 
             <div className="space-y-6">
+              {/* Back to Search button - Primary for mobile navigation */}
+              <button 
+                onClick={onBack}
+                className="w-full bg-white/5 hover:bg-white/10 text-white font-bold py-3 rounded-2xl border border-white/10 transition-all flex items-center justify-center gap-2 text-sm group/back"
+              >
+                <svg className="w-4 h-4 group-hover/back:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                <span>Search Another Student</span>
+              </button>
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
                 <div className="bg-slate-950/50 p-5 md:p-6 rounded-3xl border border-white/5">
                   <p className="text-slate-500 text-[10px] uppercase font-black tracking-widest mb-2">Academic Course</p>

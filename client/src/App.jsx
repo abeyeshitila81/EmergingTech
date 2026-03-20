@@ -124,6 +124,13 @@ function App() {
     setSubmitSuccess('');
   };
 
+  const handleClearSearch = () => {
+    setResult(null);
+    setName('');
+    setStudentId('');
+    setError('');
+  };
+
   const handleSearch = async (e) => {
     e.preventDefault();
     if (!name || !studentId) {
@@ -264,6 +271,7 @@ function App() {
               setStudentId={setStudentId}
               getResult={handleSearch}
               result={result}
+              onBack={handleClearSearch}
             />
           )}
 
