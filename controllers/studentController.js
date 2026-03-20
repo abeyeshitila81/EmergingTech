@@ -1,5 +1,39 @@
 const Student = require("../models/Student");
-const adminPassword = process.env.VITE_ADMIN_PASSWORD || process.env.ADMIN_PASSWORD || "admin123";
+const Setting = require("../models/Setting");
+
+// Helper to get or create setting
+const getSetting = async (key, defaultValue) => {
+  let setting = await Setting.findOne({ key });
+  if (!setting) {
+    setting = await Setting.create({ key, value: defaultValue });
+  }
+  return setting;
+};
+
+exports.getPublicAccess = async (req, res) => {
+  try {
+    const setting = await getSetting("public_access", false);
+    res.json({ publicAccess: setting.value });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.togglePublicAccess = async (req, res) => {
+  const authHeader = req.headers['x-admin-password'];
+  if (authHeader !== adminPassword) {
+    return res.status(401).json({ message: 'Unauthorized: Admin access required' });
+  }
+  
+  try {
+    const setting = await getSetting("public_access", false);
+    setting.value = !setting.value;
+    await setting.save();
+    res.json({ publicAccess: setting.value });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
 
 // Get result by name AND student ID
 exports.getResult = async (req, res) => {
@@ -28,7 +62,9 @@ exports.getResult = async (req, res) => {
 // Get all results
 exports.getAllResults = async (req, res) => {
   const authHeader = req.headers['x-admin-password'];
-  if (authHeader !== adminPassword) {
+  const publicAccessSetting = await getSetting("public_access", false);
+
+  if (authHeader !== adminPassword && !publicAccessSetting.value) {
     return res.status(401).json({ message: "Unauthorized: Admin access required" });
   }
   try {

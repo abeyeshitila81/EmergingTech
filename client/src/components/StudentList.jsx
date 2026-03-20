@@ -1,7 +1,15 @@
 import React, { useState } from 'react';
 import { RefreshCcw, Edit2, Trash2, CheckCircle, Info } from 'lucide-react';
 
-const StudentList = ({ resultsList, loading, error, fetchResults, onDelete, onEdit }) => {
+const StudentList = ({
+  isAdmin,
+  resultsList,
+  loading,
+  error,
+  fetchResults,
+  onDelete,
+  onEdit
+}) => {
   const [deptFilter, setDeptFilter] = useState('all');
   const [batchFilter, setBatchFilter] = useState('all');
 
@@ -115,7 +123,7 @@ const StudentList = ({ resultsList, loading, error, fetchResults, onDelete, onEd
                 <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Final</th>
                 <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-right">Total</th>
                 <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Grade</th>
-                <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center whitespace-nowrap">Actions</th>
+                {isAdmin && <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center whitespace-nowrap">Actions</th>}
               </tr>
             </thead>
             <tbody className="divide-y divide-white/5">
@@ -170,24 +178,26 @@ const StudentList = ({ resultsList, loading, error, fetchResults, onDelete, onEd
                       )}
                     </div>
                   </td>
-                  <td className="px-6 py-5">
-                    <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                      <button
-                        onClick={() => onEdit(student)}
-                        className="p-2 bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 rounded-xl border border-indigo-500/20 transition-all hover:shadow-lg hover:shadow-indigo-500/10"
-                        title="Edit Student"
-                      >
-                        <Edit2 className="w-3.5 h-3.5" />
-                      </button>
-                      <button
-                        onClick={() => onDelete(student.student_id)}
-                        className="p-2 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 rounded-xl border border-rose-500/20 transition-all hover:shadow-lg hover:shadow-rose-500/10"
-                        title="Remove Record"
-                      >
-                        <Trash2 className="w-3.5 h-3.5" />
-                      </button>
-                    </div>
-                  </td>
+                  {isAdmin && (
+                    <td className="px-6 py-5">
+                      <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                        <button
+                          onClick={() => onEdit(student)}
+                          className="p-2 bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 rounded-xl border border-indigo-500/20 transition-all hover:shadow-lg hover:shadow-indigo-500/10"
+                          title="Edit Student"
+                        >
+                          <Edit2 className="w-3.5 h-3.5" />
+                        </button>
+                        <button
+                          onClick={() => onDelete(student.student_id)}
+                          className="p-2 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 rounded-xl border border-rose-500/20 transition-all hover:shadow-lg hover:shadow-rose-500/10"
+                          title="Remove Record"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    </td>
+                  )}
                 </tr>
               ))}
             </tbody>

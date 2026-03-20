@@ -17,6 +17,7 @@ function App() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [publicAccess, setPublicAccess] = useState(false);
 
   const [newStudent, setNewStudent] = useState({
     student_id: '',
@@ -32,6 +33,42 @@ function App() {
     comments: ''
   });
   const [submitSuccess, setSubmitSuccess] = useState('');
+
+  // Fetch public access status on load
+  useEffect(() => {
+    fetchPublicAccess();
+  }, []);
+
+  const fetchPublicAccess = async () => {
+    try {
+      const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+      const apiBase = import.meta.env.VITE_API_BASE_URL || (isLocal ? `http://${window.location.hostname}:5001` : '');
+      const response = await fetch(`${apiBase}/public-access`);
+      const data = await response.json();
+      setPublicAccess(data.publicAccess);
+    } catch (err) {
+      console.error("Failed to fetch public access status", err);
+    }
+  };
+
+  const handleTogglePublicAccess = async () => {
+    setLoading(true);
+    try {
+      const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+      const apiBase = import.meta.env.VITE_API_BASE_URL || (isLocal ? `http://${window.location.hostname}:5001` : '');
+      const response = await fetch(`${apiBase}/toggle-public-access`, {
+        method: 'POST',
+        headers: { 'x-admin-password': adminPassword }
+      });
+      if (!response.ok) throw new Error('Failed to toggle public access');
+      const data = await response.json();
+      setPublicAccess(data.publicAccess);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // Persist session to localStorage
   useEffect(() => {
@@ -171,6 +208,8 @@ function App() {
           view={view} 
           setView={setView} 
           isAdmin={isAdmin}
+          publicAccess={publicAccess}
+          onTogglePublicAccess={handleTogglePublicAccess}
           onLoginClick={() => setShowLogin(true)}
           onLogout={() => {
             setIsAdmin(false);
@@ -224,8 +263,9 @@ function App() {
             />
           )}
 
-          {view === 'list' && isAdmin && (
+          {view === 'list' && (isAdmin || publicAccess) && (
             <StudentList 
+              isAdmin={isAdmin}
               loading={loading}
               error={error}
               resultsList={resultsList}
@@ -233,6 +273,16 @@ function App() {
               onDelete={handleDelete}
               onEdit={handleEdit}
             />
+          )}
+          
+          {view === 'list' && !isAdmin && !publicAccess && (
+            <div className="text-center py-20 bg-white/5 rounded-[2.5rem] border border-white/10 border-dashed animate-in fade-in duration-500">
+              <div className="w-16 h-16 bg-rose-500/10 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-rose-500/20">
+                <span className="text-2xl">🔒</span>
+              </div>
+              <h3 className="text-xl font-bold text-white mb-2">Access Restricted</h3>
+              <p className="text-slate-400 max-w-xs mx-auto">The student directory is currently private. Please check back later or contact the administrator.</p>
+            </div>
           )}
         </div>
       </div>
