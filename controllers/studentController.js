@@ -40,9 +40,16 @@ exports.togglePublicAccess = async (req, res) => {
 // Get result by name AND student ID
 exports.getResult = async (req, res) => {
   const { name, id } = req.query;
-  
+  const publicAccessSetting = await getSetting("public_access", false);
+
   if (!name || !id) {
     return res.status(400).json({ message: "Name and ID are required" });
+  }
+
+  // If system is private, only admin can search (or if admin header is present)
+  const authHeader = req.headers['x-admin-password'];
+  if (authHeader !== adminPassword && !publicAccessSetting.value) {
+    return res.status(403).json({ message: "Access Restricted: Result lookup is currently private." });
   }
 
   try {
@@ -64,9 +71,9 @@ exports.getResult = async (req, res) => {
 // Get all results
 exports.getAllResults = async (req, res) => {
   const authHeader = req.headers['x-admin-password'];
-  const publicAccessSetting = await getSetting("public_access", false);
-
-  if (authHeader !== adminPassword && !publicAccessSetting.value) {
+  
+  // Strictly Admin-Only for the full directory
+  if (authHeader !== adminPassword) {
     return res.status(401).json({ message: "Unauthorized: Admin access required" });
   }
   try {

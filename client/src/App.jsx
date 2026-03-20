@@ -81,10 +81,10 @@ function App() {
 
   // Redirect if view becomes restricted
   useEffect(() => {
-    if (view === 'list' && !isAdmin && !publicAccess) {
+    if (view === 'list' && !isAdmin) {
       setView('search');
     }
-  }, [view, isAdmin, publicAccess]);
+  }, [view, isAdmin]);
 
   // Fetch all results when view changes to 'list'
   useEffect(() => {
@@ -243,7 +243,7 @@ function App() {
         )}
 
         <div className={`w-full mx-auto transition-all duration-700 ${view === 'list' ? 'max-w-full' : 'max-w-3xl'}`}>
-          {view === 'search' && (
+          {view === 'search' && (isAdmin || publicAccess) && (
             <Search 
               loading={loading}
               error={error}
@@ -251,9 +251,19 @@ function App() {
               setName={setName}
               studentId={studentId}
               setStudentId={setStudentId}
-              getResult={getResult}
-              result={result}
+              getResult={handleSearch}
+              result={searchResult}
             />
+          )}
+
+          {view === 'search' && !isAdmin && !publicAccess && (
+            <div className="text-center py-20 bg-white/5 rounded-[2.5rem] border border-white/10 border-dashed animate-in fade-in duration-500">
+              <div className="w-16 h-16 bg-rose-500/10 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-rose-500/20">
+                <span className="text-2xl">🔒</span>
+              </div>
+              <h3 className="text-xl font-bold text-white mb-2">Search Restricted</h3>
+              <p className="text-slate-400 max-w-xs mx-auto">Individual result lookup is currently private. Please check back later or contact the administrator.</p>
+            </div>
           )}
 
           {view === 'submit' && isAdmin && (
@@ -263,17 +273,17 @@ function App() {
               submitSuccess={submitSuccess}
               newStudent={newStudent}
               setNewStudent={setNewStudent}
-              handleAddResult={handleAddResult}
+              handleAddResult={handleSubmit}
               isEditing={isEditing}
               onCancel={() => {
                 setIsEditing(false);
-                setNewStudent({ student_id: '', name: '', course: '', department: 'pharmacy', batch: '2016', mid_exam: '', final_exam: '', quiz: '', assignment: '', grade: '', comments: '' });
+                resetForm();
                 setView('list');
               }}
             />
           )}
 
-          {view === 'list' && (isAdmin || publicAccess) && (
+          {view === 'list' && isAdmin && (
             <StudentList 
               isAdmin={isAdmin}
               loading={loading}
@@ -283,16 +293,6 @@ function App() {
               onDelete={handleDelete}
               onEdit={handleEdit}
             />
-          )}
-          
-          {view === 'list' && !isAdmin && !publicAccess && (
-            <div className="text-center py-20 bg-white/5 rounded-[2.5rem] border border-white/10 border-dashed animate-in fade-in duration-500">
-              <div className="w-16 h-16 bg-rose-500/10 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-rose-500/20">
-                <span className="text-2xl">🔒</span>
-              </div>
-              <h3 className="text-xl font-bold text-white mb-2">Access Restricted</h3>
-              <p className="text-slate-400 max-w-xs mx-auto">The student directory is currently private. Please check back later or contact the administrator.</p>
-            </div>
           )}
         </div>
       </div>
