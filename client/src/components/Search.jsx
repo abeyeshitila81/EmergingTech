@@ -170,6 +170,19 @@ const Search = ({
                   <p className="text-slate-300 text-xs md:text-sm leading-relaxed italic">"{result.comments}"</p>
                 </div>
               )}
+
+              {/* Bottom Back Button - For convenient exit after reading all content */}
+              <div className="pt-6 border-t border-white/5 mt-8">
+                <button 
+                  onClick={onBack}
+                  className="w-full bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 font-bold py-4 rounded-2xl border border-emerald-500/20 transition-all flex items-center justify-center gap-3 group/back-bottom"
+                >
+                  <svg className="w-5 h-5 group-hover/back-bottom:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                  </svg>
+                  <span>Search Another Student</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
