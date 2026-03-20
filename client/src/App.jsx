@@ -165,8 +165,8 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen p-6 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 font-sans">
-      <div className={`mx-auto py-12 transition-all duration-700 ${view === 'list' ? 'max-w-[1400px]' : 'max-w-4xl'}`}>
+    <div className="min-h-screen p-6 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 font-sans flex flex-col justify-start">
+      <div className={`w-full mx-auto py-6 md:py-12 transition-all duration-700 ${view === 'list' ? 'max-w-[100%] px-2 md:px-6' : 'max-w-4xl px-4'}`}>
         <Header 
           view={view} 
           setView={setView} 
@@ -193,7 +193,7 @@ function App() {
           />
         )}
 
-        <div className={`mx-auto transition-all duration-700 ${view === 'list' ? 'max-w-full' : 'max-w-3xl'}`}>
+        <div className={`w-full mx-auto transition-all duration-700 ${view === 'list' ? 'max-w-full' : 'max-w-3xl'}`}>
           {view === 'search' && (
             <Search 
               loading={loading}
