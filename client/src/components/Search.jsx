@@ -78,7 +78,7 @@ const Search = ({
                 <svg className="w-5 h-5 group-hover/back:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
-                <span>Back to Search</span>
+                <span>Back</span>
               </button>
             </div>
 
@@ -180,7 +180,7 @@ const Search = ({
                   <svg className="w-5 h-5 group-hover/back-bottom:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                   </svg>
-                  <span>Search Another Student</span>
+                  <span>Back</span>
                 </button>
               </div>
             </div>
