@@ -7,8 +7,8 @@ import AdminLogin from './components/AdminLogin';
 
 function App() {
   const [view, setView] = useState('search'); // 'search', 'submit', or 'list'
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [adminPassword, setAdminPassword] = useState('');
+  const [isAdmin, setIsAdmin] = useState(() => localStorage.getItem('isAdmin') === 'true');
+  const [adminPassword, setAdminPassword] = useState(() => localStorage.getItem('adminPassword') || '');
   const [showLogin, setShowLogin] = useState(false);
   const [name, setName] = useState('');
   const [studentId, setStudentId] = useState('');
@@ -32,6 +32,12 @@ function App() {
     comments: ''
   });
   const [submitSuccess, setSubmitSuccess] = useState('');
+
+  // Persist session to localStorage
+  useEffect(() => {
+    localStorage.setItem('isAdmin', isAdmin);
+    localStorage.setItem('adminPassword', adminPassword);
+  }, [isAdmin, adminPassword]);
 
   // Fetch all results when view changes to 'list'
   useEffect(() => {
@@ -169,6 +175,8 @@ function App() {
           onLogout={() => {
             setIsAdmin(false);
             setAdminPassword('');
+            localStorage.removeItem('isAdmin');
+            localStorage.removeItem('adminPassword');
             setView('search');
           }}
         />
@@ -178,6 +186,8 @@ function App() {
             onLogin={(pass) => {
               setIsAdmin(true);
               setAdminPassword(pass);
+              localStorage.setItem('isAdmin', 'true');
+              localStorage.setItem('adminPassword', pass);
             }} 
             onClose={() => setShowLogin(false)} 
           />
