@@ -26,6 +26,7 @@ function App() {
     final_exam: '',
     quiz: '',
     assignment: '',
+    department: 'pharmacy',
     grade: '',
     comments: ''
   });
@@ -110,7 +111,7 @@ function App() {
       }
 
       setSubmitSuccess(isEditing ? 'Student result updated successfully!' : 'Student result added successfully!');
-      setNewStudent({ student_id: '', name: '', course: '', mid_exam: '', final_exam: '', quiz: '', assignment: '', grade: '', comments: '' });
+      setNewStudent({ student_id: '', name: '', course: '', department: 'pharmacy', mid_exam: '', final_exam: '', quiz: '', assignment: '', grade: '', comments: '' });
       if (isEditing) {
         setIsEditing(false);
         setView('list');
@@ -148,6 +149,7 @@ function App() {
       final_exam: student.final_exam || '',
       quiz: student.quiz || '',
       assignment: student.assignment || '',
+      department: student.department || 'pharmacy',
       comments: student.comments || ''
     });
     setIsEditing(true);
@@ -204,7 +206,7 @@ function App() {
               isEditing={isEditing}
               onCancel={() => {
                 setIsEditing(false);
-                setNewStudent({ student_id: '', name: '', course: '', mid_exam: '', final_exam: '', quiz: '', assignment: '', grade: '', comments: '' });
+                setNewStudent({ student_id: '', name: '', course: '', department: 'pharmacy', mid_exam: '', final_exam: '', quiz: '', assignment: '', grade: '', comments: '' });
                 setView('list');
               }}
             />

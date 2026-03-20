@@ -46,7 +46,7 @@ exports.addOrUpdateResult = async (req, res) => {
     return res.status(401).json({ message: "Unauthorized: Admin access required" });
   }
   try {
-    const { student_id, name, course, mid_exam, final_exam, quiz, assignment, comments } = req.body;
+    const { student_id, name, course, department, mid_exam, final_exam, quiz, assignment, comments } = req.body;
     
     if (!student_id || !name) {
       return res.status(400).json({ message: "Student ID and Name are required" });
@@ -85,6 +85,7 @@ exports.addOrUpdateResult = async (req, res) => {
     const updateData = {
       name,
       course,
+      department: department || existingStudent?.department || 'pharmacy',
       marks: totalMarks,
       grade: grade,
       comments: comments !== undefined ? comments : (existingStudent?.comments || "")

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const StudentList = ({ 
   loading, 
@@ -8,10 +8,41 @@ const StudentList = ({
   onDelete,
   onEdit 
 }) => {
+  const [filter, setFilter] = useState('all');
+
+  const filteredResults = resultsList.filter(student => 
+    filter === 'all' ? true : student.department === filter
+  );
+
   return (
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-8 duration-500">
-      <div className="flex justify-between items-center mb-6">
-        <h3 className="text-2xl font-black text-white ml-2 tracking-tight">Student Directory</h3>
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+        <div>
+          <h2 className="text-2xl font-bold text-white mb-1">Student Directory</h2>
+          <p className="text-slate-400 text-sm">Manage all registered students and results</p>
+        </div>
+        
+        <div className="flex bg-slate-800/50 p-1 rounded-xl border border-slate-700/50">
+          <button 
+            onClick={() => setFilter('all')}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${filter === 'all' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/20' : 'text-slate-400 hover:text-white'}`}
+          >
+            All
+          </button>
+          <button 
+            onClick={() => setFilter('pharmacy')}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${filter === 'pharmacy' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/20' : 'text-slate-400 hover:text-white'}`}
+          >
+            Pharmacy
+          </button>
+          <button 
+            onClick={() => setFilter('nursing')}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${filter === 'nursing' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/20' : 'text-slate-400 hover:text-white'}`}
+          >
+            Nursing
+          </button>
+        </div>
+
         <button 
           onClick={fetchResults}
           className="bg-slate-800/50 hover:bg-slate-700/50 text-slate-300 p-2 rounded-xl border border-slate-700 transition-all"
@@ -38,9 +69,10 @@ const StudentList = ({
             <thead>
               <tr className="border-b border-white/10 bg-white/5">
                 <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest w-12 text-center">#</th>
-                <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-left">Student</th>
-                <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-left">ID</th>
-                <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-left">Course</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">Student ID</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">Name</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">Department</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">Course</th>
                 <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Date Added</th>
                 <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Mid</th>
                 <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Quiz</th>
@@ -52,15 +84,12 @@ const StudentList = ({
               </tr>
             </thead>
             <tbody className="divide-y divide-white/5">
-              {resultsList.map((item, index) => (
-                <tr key={item._id} className="hover:bg-white/5 transition-colors group">
+              {filteredResults.map((student, index) => (
+                <tr key={student._id} className="border-b border-slate-700/50 hover:bg-white/5 transition-colors group">
                   <td className="px-6 py-4 text-center">
                     <span className="text-[10px] font-black text-slate-600 bg-slate-900/30 w-6 h-6 flex items-center justify-center rounded-full mx-auto border border-white/5">
                       {index + 1}
                     </span>
-                  </td>
-                  <td className="px-6 py-4">
-                    <p className="text-white font-bold">{item.name || '---'}</p>
                   </td>
                   <td className="px-6 py-4">
                     <p className="text-slate-500 text-xs font-black tracking-widest uppercase">{item.student_id || '---'}</p>

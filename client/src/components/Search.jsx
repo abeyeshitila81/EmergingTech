@@ -72,11 +72,22 @@ const Search = ({
               </div>
             </div>
             <div className="space-y-8">
-              <div>
-                <h2 className="text-4xl font-black text-white tracking-tight">{result.name}</h2>
-                <p className="text-emerald-400 font-bold tracking-widest mt-1">SID: {result.student_id}</p>
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8 pb-8 border-b border-white/10">
+                <div className="flex items-center gap-4">
+                  <div className="w-16 h-16 rounded-2xl bg-indigo-500/20 flex items-center justify-center border border-indigo-500/30">
+                    <GraduationCap className="w-8 h-8 text-indigo-400" />
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold text-white leading-tight">{result.name}</h3>
+                    <div className="flex items-center gap-2 mt-1">
+                      <span className="text-slate-400 text-sm font-mono">ID: {result.student_id}</span>
+                      <span className={`px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider ${result.department === 'pharmacy' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-blue-500/10 text-blue-400 border border-blue-500/20'}`}>
+                        {result.department || 'Pharmacy'}
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </div>
-
               <div className="grid grid-cols-2 gap-6">
                 <div className="bg-slate-950/50 p-6 rounded-3xl border border-white/5">
                   <p className="text-slate-500 text-[10px] uppercase font-black tracking-widest mb-2">Academic Course</p>
