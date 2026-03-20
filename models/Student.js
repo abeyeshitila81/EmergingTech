@@ -5,6 +5,7 @@ const studentSchema = new mongoose.Schema({
   name: { type: String, required: true },
   course: String,
   department: { type: String, enum: ['pharmacy', 'nursing'], default: 'pharmacy' },
+  batch: { type: String, default: '2016' },
   mid_exam: Number,
   final_exam: Number,
   quiz: Number,

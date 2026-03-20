@@ -27,6 +27,7 @@ function App() {
     quiz: '',
     assignment: '',
     department: 'pharmacy',
+    batch: '2016',
     grade: '',
     comments: ''
   });
@@ -111,7 +112,7 @@ function App() {
       }
 
       setSubmitSuccess(isEditing ? 'Student result updated successfully!' : 'Student result added successfully!');
-      setNewStudent({ student_id: '', name: '', course: '', department: 'pharmacy', mid_exam: '', final_exam: '', quiz: '', assignment: '', grade: '', comments: '' });
+      setNewStudent({ student_id: '', name: '', course: '', department: 'pharmacy', batch: '2016', mid_exam: '', final_exam: '', quiz: '', assignment: '', grade: '', comments: '' });
       if (isEditing) {
         setIsEditing(false);
         setView('list');
@@ -150,6 +151,7 @@ function App() {
       quiz: student.quiz || '',
       assignment: student.assignment || '',
       department: student.department || 'pharmacy',
+      batch: student.batch || '2016',
       comments: student.comments || ''
     });
     setIsEditing(true);
@@ -206,7 +208,7 @@ function App() {
               isEditing={isEditing}
               onCancel={() => {
                 setIsEditing(false);
-                setNewStudent({ student_id: '', name: '', course: '', department: 'pharmacy', mid_exam: '', final_exam: '', quiz: '', assignment: '', grade: '', comments: '' });
+                setNewStudent({ student_id: '', name: '', course: '', department: 'pharmacy', batch: '2016', mid_exam: '', final_exam: '', quiz: '', assignment: '', grade: '', comments: '' });
                 setView('list');
               }}
             />

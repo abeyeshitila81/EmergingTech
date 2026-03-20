@@ -1,57 +1,83 @@
 import React, { useState } from 'react';
 
-const StudentList = ({ 
-  loading, 
-  error, 
-  resultsList, 
-  fetchResults,
-  onDelete,
-  onEdit 
-}) => {
-  const [filter, setFilter] = useState('all');
+const StudentList = ({ resultsList, loading, error, fetchResults, onDelete, onEdit }) => {
+  const [deptFilter, setDeptFilter] = useState('all');
+  const [batchFilter, setBatchFilter] = useState('all');
 
-  const filteredResults = resultsList.filter(student => 
-    filter === 'all' ? true : student.department === filter
-  );
+  const filteredResults = resultsList.filter(student => {
+    const matchesDept = deptFilter === 'all' ? true : student.department === deptFilter;
+    const matchesBatch = batchFilter === 'all' ? true : student.batch === batchFilter;
+    return matchesDept && matchesBatch;
+  });
 
   return (
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-8 duration-500">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-        <div>
-          <h2 className="text-2xl font-bold text-white mb-1">Student Directory</h2>
-          <p className="text-slate-400 text-sm">Manage all registered students and results</p>
+      <div className="flex flex-col gap-6 mb-8">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h2 className="text-2xl font-bold text-white mb-1">Student Directory</h2>
+            <p className="text-slate-400 text-sm">Manage all registered students and results</p>
+          </div>
+          <button
+            onClick={fetchResults}
+            className="bg-slate-800/50 hover:bg-slate-700/50 text-slate-300 p-2 rounded-xl border border-slate-700 transition-all self-end md:self-auto"
+            title="Refresh List"
+          >
+            <svg className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+          </button>
         </div>
         
-        <div className="flex bg-slate-800/50 p-1 rounded-xl border border-slate-700/50">
-          <button 
-            onClick={() => setFilter('all')}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${filter === 'all' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/20' : 'text-slate-400 hover:text-white'}`}
-          >
-            All
-          </button>
-          <button 
-            onClick={() => setFilter('pharmacy')}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${filter === 'pharmacy' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/20' : 'text-slate-400 hover:text-white'}`}
-          >
-            Pharmacy
-          </button>
-          <button 
-            onClick={() => setFilter('nursing')}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${filter === 'nursing' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/20' : 'text-slate-400 hover:text-white'}`}
-          >
-            Nursing
-          </button>
-        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="flex bg-slate-800/50 p-1 rounded-xl border border-slate-700/50 w-fit">
+            <button 
+              onClick={() => setDeptFilter('all')}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${deptFilter === 'all' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/20' : 'text-slate-400 hover:text-white'}`}
+            >
+              All Depts
+            </button>
+            <button 
+              onClick={() => setDeptFilter('pharmacy')}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${deptFilter === 'pharmacy' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/20' : 'text-slate-400 hover:text-white'}`}
+            >
+              Pharmacy
+            </button>
+            <button 
+              onClick={() => setDeptFilter('nursing')}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${deptFilter === 'nursing' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/20' : 'text-slate-400 hover:text-white'}`}
+            >
+              Nursing
+            </button>
+          </div>
 
-        <button 
-          onClick={fetchResults}
-          className="bg-slate-800/50 hover:bg-slate-700/50 text-slate-300 p-2 rounded-xl border border-slate-700 transition-all"
-          title="Refresh List"
-        >
-          <svg className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-          </svg>
-        </button>
+          <div className="flex bg-slate-800/50 p-1 rounded-xl border border-slate-700/50 w-fit">
+            <button 
+              onClick={() => setBatchFilter('all')}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${batchFilter === 'all' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/20' : 'text-slate-400 hover:text-white'}`}
+            >
+              All Batches
+            </button>
+            <button 
+              onClick={() => setBatchFilter('2016')}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${batchFilter === '2016' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/20' : 'text-slate-400 hover:text-white'}`}
+            >
+              2016
+            </button>
+            <button 
+              onClick={() => setBatchFilter('2018')}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${batchFilter === '2018' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/20' : 'text-slate-400 hover:text-white'}`}
+            >
+              2018
+            </button>
+            <button 
+              onClick={() => setBatchFilter('2020')}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${batchFilter === '2020' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/20' : 'text-slate-400 hover:text-white'}`}
+            >
+              2020
+            </button>
+          </div>
+        </div>
       </div>
 
       {loading && resultsList.length === 0 ? (
@@ -71,7 +97,7 @@ const StudentList = ({
                 <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest w-12 text-center">#</th>
                 <th className="px-6 py-4 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">Student ID</th>
                 <th className="px-6 py-4 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">Name</th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">Department</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">Dept/Batch</th>
                 <th className="px-6 py-4 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">Course</th>
                 <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Date Added</th>
                 <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Mid</th>
@@ -92,49 +118,56 @@ const StudentList = ({
                     </span>
                   </td>
                   <td className="px-6 py-4">
-                    <p className="text-slate-500 text-xs font-black tracking-widest uppercase">{item.student_id || '---'}</p>
+                    <p className="text-slate-500 text-xs font-black tracking-widest uppercase">{student.student_id || '---'}</p>
                   </td>
-                  <td className="px-6 py-4">
-                    <p className="text-slate-400 text-sm font-medium">{item.course || '---'}</p>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-white">{student.name}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="flex flex-col gap-1">
+                      <span className={`px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider w-fit ${student.department === 'pharmacy' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-blue-500/10 text-blue-400 border border-blue-500/20'}`}>
+                        {student.department || 'Pharmacy'}
+                      </span>
+                      <span className="text-[10px] text-slate-500 font-bold ml-1">Batch: {student.batch || '2016'}</span>
+                    </div>
                   </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-300">{student.course}</td>
                   <td className="px-6 py-4 text-center">
                     <p className="text-slate-500 text-[10px] font-bold">
-                      {item.createdAt ? new Date(item.createdAt).toLocaleDateString() : '---'}
+                      {student.createdAt ? new Date(student.createdAt).toLocaleDateString() : '---'}
                     </p>
                   </td>
                   <td className="px-6 py-4 text-center">
                     <span className="text-xs font-black text-slate-500 bg-slate-900/50 px-2 py-1 rounded-md border border-white/5">
-                      {item.mid_exam ?? '---'}
+                      {student.mid_exam ?? '---'}
                     </span>
                   </td>
                   <td className="px-6 py-4 text-center">
                     <span className="text-xs font-black text-slate-500 bg-slate-900/50 px-2 py-1 rounded-md border border-white/5">
-                      {item.quiz ?? '---'}
+                      {student.quiz ?? '---'}
                     </span>
                   </td>
                   <td className="px-6 py-4 text-center">
                     <span className="text-xs font-black text-slate-500 bg-slate-900/50 px-2 py-1 rounded-md border border-white/5">
-                      {item.assignment ?? '---'}
+                      {student.assignment ?? '---'}
                     </span>
                   </td>
                   <td className="px-6 py-4 text-center">
                     <span className="text-xs font-black text-slate-500 bg-slate-900/50 px-2 py-1 rounded-md border border-white/5">
-                      {(item.final_exam !== undefined && item.final_exam !== null) ? item.final_exam : '---'}
+                      {(student.final_exam !== undefined && student.final_exam !== null) ? student.final_exam : '---'}
                     </span>
                   </td>
                   <td className="px-6 py-4 text-right">
-                    <span className={`font-black text-lg ${item.grade === 'Pending' ? 'text-slate-500' : 'text-white'}`}>
-                      {item.grade === 'Pending' ? '---' : item.marks}
+                    <span className={`font-black text-lg ${student.grade === 'Pending' ? 'text-slate-500' : 'text-white'}`}>
+                      {student.grade === 'Pending' ? '---' : student.marks}
                       <span className="text-[10px] text-slate-500 ml-0.5 font-bold">/100</span>
                     </span>
                   </td>
                   <td className="px-6 py-4 text-center">
-                    <div className={`w-10 h-10 ${item.grade === 'Pending' ? 'bg-slate-900/30 text-slate-600' : 'bg-slate-800 text-emerald-400'} rounded-lg flex items-center justify-center border border-white/5 font-black group-hover:scale-110 transition-transform mx-auto relative group/info`}>
-                      {item.grade === 'Pending' ? '...' : item.grade}
-                      {item.comments && (
+                    <div className={`w-10 h-10 ${student.grade === 'Pending' ? 'bg-slate-900/30 text-slate-600' : 'bg-slate-800 text-emerald-400'} rounded-lg flex items-center justify-center border border-white/5 font-black group-hover:scale-110 transition-transform mx-auto relative group/info`}>
+                      {student.grade === 'Pending' ? '...' : student.grade}
+                      {student.comments && (
                         <div className="absolute bottom-full mb-2 hidden group-hover/info:block w-48 bg-slate-900 border border-white/10 p-3 rounded-xl text-[10px] text-slate-300 shadow-2xl z-50 pointer-events-none leading-relaxed">
                           <p className="font-black text-emerald-400 uppercase tracking-widest mb-1 border-b border-white/5 pb-1">Notes</p>
-                          {item.comments}
+                          {student.comments}
                         </div>
                       )}
                     </div>
@@ -142,7 +175,7 @@ const StudentList = ({
                   <td className="px-6 py-4 text-center">
                     <div className="flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                       <button
-                        onClick={() => onEdit(item)}
+                        onClick={() => onEdit(student)}
                         className="p-2 bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 rounded-lg border border-blue-500/20 transition-all"
                         title="Edit Record"
                       >
@@ -151,7 +184,7 @@ const StudentList = ({
                         </svg>
                       </button>
                       <button
-                        onClick={() => onDelete(item.student_id)}
+                        onClick={() => onDelete(student.student_id)}
                         className="p-2 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 rounded-lg border border-rose-500/20 transition-all"
                         title="Delete Record"
                       >

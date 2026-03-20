@@ -95,6 +95,18 @@ const SubmitForm = ({
                 onChange={(e) => setNewStudent({...newStudent, assignment: e.target.value})}
               />
             </div>
+            <div className="space-y-2">
+              <label className="text-sm font-semibold text-slate-300 ml-1">Batch (Year)</label>
+              <select
+                value={newStudent.batch}
+                onChange={(e) => setNewStudent({ ...newStudent, batch: e.target.value })}
+                className="w-full px-5 py-4 bg-slate-800/50 border border-slate-700/50 rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all appearance-none"
+              >
+                <option value="2016">2016</option>
+                <option value="2018">2018</option>
+                <option value="2020">2020</option>
+              </select>
+            </div>
           </div>
 
           <div className="grid grid-cols-2 gap-4">

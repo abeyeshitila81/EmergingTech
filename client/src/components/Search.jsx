@@ -1,4 +1,5 @@
 import React from 'react';
+import { GraduationCap } from 'lucide-react';
 import { generateResultPDF } from '../utils/pdfGenerator';
 const Search = ({
   loading,
@@ -82,9 +83,12 @@ const Search = ({
                     <div className="flex items-center gap-2 mt-1">
                       <span className="text-slate-400 text-sm font-mono">ID: {result.student_id}</span>
                       <span className={`px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider ${result.department === 'pharmacy' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-blue-500/10 text-blue-400 border border-blue-500/20'}`}>
-                        {result.department || 'Pharmacy'}
-                      </span>
-                    </div>
+                      {result.department || 'Pharmacy'}
+                    </span>
+                    <span className="px-2 py-0.5 rounded-md text-[10px] font-bold uppercase bg-slate-800 text-slate-400 border border-white/5">
+                      Batch: {result.batch || '2016'}
+                    </span>
+                  </div>
                   </div>
                 </div>
               </div>
