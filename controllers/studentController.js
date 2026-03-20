@@ -1,5 +1,5 @@
 const Student = require("../models/Student");
-const adminPassword = process.env.VITE_ADMIN_PASSWORD || "admin123";
+const adminPassword = process.env.VITE_ADMIN_PASSWORD || process.env.ADMIN_PASSWORD || "admin123";
 
 // Get result by name AND student ID
 exports.getResult = async (req, res) => {
