@@ -32,7 +32,8 @@ function App() {
     batch: '2016',
     grade: '',
     comments: '',
-    pin: ''
+    pin: '',
+    generateNewPin: false
   });
   const [submitSuccess, setSubmitSuccess] = useState('');
 
@@ -120,7 +121,7 @@ function App() {
       student_id: '', name: '', course: '', 
       department: 'pharmacy', batch: '2016', 
       mid_exam: '', final_exam: '', quiz: '', 
-      assignment: '', grade: '', comments: '', pin: '' 
+      assignment: '', grade: '', comments: '', pin: '', generateNewPin: false 
     });
     setError('');
     setSubmitSuccess('');
@@ -227,7 +228,8 @@ function App() {
       department: student.department || 'pharmacy',
       batch: student.batch || '2016',
       comments: student.comments || '',
-      pin: student.pin || ''
+      pin: student.pin || '',
+      generateNewPin: false
     });
     setIsEditing(true);
     setView('submit');

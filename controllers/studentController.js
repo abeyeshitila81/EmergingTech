@@ -111,7 +111,7 @@ exports.addOrUpdateResult = async (req, res) => {
     return res.status(401).json({ message: "Unauthorized: Admin access required" });
   }
   try {
-    const { student_id, name, course, department, batch, mid_exam, final_exam, quiz, assignment, comments, pin } = req.body;
+    const { student_id, name, course, department, batch, mid_exam, final_exam, quiz, assignment, comments, pin, generateNewPin } = req.body;
     
     if (!student_id || !name) {
       return res.status(400).json({ message: "Student ID and Name are required" });
@@ -157,10 +157,14 @@ exports.addOrUpdateResult = async (req, res) => {
       comments: comments !== undefined ? comments : (existingStudent?.comments || "")
     };
 
-    if (pin) {
+    if (generateNewPin) {
+      updateData.pin = Math.floor(1000 + Math.random() * 9000).toString();
+      updateData.has_logged_in = false;
+    } else if (pin) {
       updateData.pin = pin;
     } else if (!existingStudent || !existingStudent.pin) {
       updateData.pin = Math.floor(1000 + Math.random() * 9000).toString();
+      updateData.has_logged_in = false;
     }
 
     if (combinedMid !== null) updateData.mid_exam = combinedMid;
