@@ -6,18 +6,32 @@ const Header = ({ view, setView, isAdmin, publicAccess, onTogglePublicAccess, on
       <div className="flex justify-between items-center mb-8">
         <div className="w-24">
           {isAdmin && (
-            <button
-              onClick={onTogglePublicAccess}
-              className={`px-3 py-1.5 rounded-lg text-[10px] font-black border transition-all uppercase tracking-widest flex items-center gap-2 ${
-                publicAccess 
-                  ? 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20' 
-                  : 'bg-slate-500/10 text-slate-400 border-slate-500/20'
-              }`}
-              title={publicAccess ? "Public access is ON" : "Public access is OFF"}
-            >
-              <div className={`w-2 h-2 rounded-full ${publicAccess ? 'bg-cyan-400 animate-pulse' : 'bg-slate-500'}`}></div>
-              {publicAccess ? 'Public' : 'Private'}
-            </button>
+            <div className="flex bg-slate-900/40 p-1 rounded-xl border border-white/5 backdrop-blur-sm shadow-inner group">
+              <button
+                onClick={() => !publicAccess && onTogglePublicAccess()}
+                className={`px-4 py-1.5 rounded-lg text-[10px] font-black transition-all uppercase tracking-widest flex items-center gap-2 ${
+                  publicAccess 
+                    ? 'bg-cyan-500/10 text-cyan-400 shadow-sm border border-cyan-500/20' 
+                    : 'text-slate-500 hover:text-slate-300 hover:bg-white/5'
+                }`}
+                title="Switch to Public Mode"
+              >
+                <div className={`w-1.5 h-1.5 rounded-full ${publicAccess ? 'bg-cyan-400 animate-pulse' : 'bg-transparent'}`}></div>
+                Public
+              </button>
+              <button
+                onClick={() => publicAccess && onTogglePublicAccess()}
+                className={`px-4 py-1.5 rounded-lg text-[10px] font-black transition-all uppercase tracking-widest flex items-center gap-2 ${
+                  !publicAccess 
+                    ? 'bg-rose-500/10 text-rose-400 shadow-sm border border-rose-500/20' 
+                    : 'text-slate-500 hover:text-slate-300 hover:bg-white/5'
+                }`}
+                title="Switch to Private Mode"
+              >
+                <div className={`w-1.5 h-1.5 rounded-full ${!publicAccess ? 'bg-rose-400 animate-pulse' : 'bg-transparent'}`}></div>
+                Private
+              </button>
+            </div>
           )}
         </div>
         <div>

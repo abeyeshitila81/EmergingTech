@@ -29,9 +29,15 @@ exports.togglePublicAccess = async (req, res) => {
   
   try {
     const setting = await getSetting("public_access", false);
-    setting.value = !setting.value;
-    await setting.save();
-    res.json({ publicAccess: setting.value });
+    const newValue = !setting.value;
+    
+    await Setting.findOneAndUpdate(
+      { key: "public_access" },
+      { $set: { value: newValue } },
+      { new: true }
+    );
+    
+    res.json({ publicAccess: newValue });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
