@@ -12,6 +12,7 @@ function App() {
   const [showLogin, setShowLogin] = useState(false);
   const [name, setName] = useState('');
   const [studentId, setStudentId] = useState('');
+  const [pin, setPin] = useState('');
   const [result, setResult] = useState(null);
   const [resultsList, setResultsList] = useState([]);
   const [error, setError] = useState('');
@@ -30,7 +31,8 @@ function App() {
     department: 'pharmacy',
     batch: '2016',
     grade: '',
-    comments: ''
+    comments: '',
+    pin: ''
   });
   const [submitSuccess, setSubmitSuccess] = useState('');
 
@@ -118,7 +120,7 @@ function App() {
       student_id: '', name: '', course: '', 
       department: 'pharmacy', batch: '2016', 
       mid_exam: '', final_exam: '', quiz: '', 
-      assignment: '', grade: '', comments: '' 
+      assignment: '', grade: '', comments: '', pin: '' 
     });
     setError('');
     setSubmitSuccess('');
@@ -128,6 +130,7 @@ function App() {
     setResult(null);
     setName('');
     setStudentId('');
+    setPin('');
     setError('');
   };
 
@@ -145,7 +148,7 @@ function App() {
     try {
       const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
       const apiBase = import.meta.env.VITE_API_BASE_URL || (isLocal ? `http://${window.location.hostname}:5001` : '');
-      const response = await fetch(`${apiBase}/result?name=${name}&id=${studentId}`);
+      const response = await fetch(`${apiBase}/result?name=${name}&id=${studentId}&pin=${pin}`);
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || 'Result not found');
@@ -223,7 +226,8 @@ function App() {
       assignment: student.assignment || '',
       department: student.department || 'pharmacy',
       batch: student.batch || '2016',
-      comments: student.comments || ''
+      comments: student.comments || '',
+      pin: student.pin || ''
     });
     setIsEditing(true);
     setView('submit');
@@ -269,6 +273,8 @@ function App() {
               setName={setName}
               studentId={studentId}
               setStudentId={setStudentId}
+              pin={pin}
+              setPin={setPin}
               getResult={handleSearch}
               result={result}
               onBack={handleClearSearch}

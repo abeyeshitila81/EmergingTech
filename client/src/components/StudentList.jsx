@@ -115,6 +115,7 @@ const StudentList = ({
               <tr className="border-b border-white/10 bg-white/5">
                 <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest w-12 text-center">#</th>
                 <th className="px-6 py-4 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest">ID</th>
+                <th className="px-6 py-4 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest">PIN</th>
                 <th className="px-6 py-4 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest">Student</th>
                 <th className="px-6 py-4 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest">Dept/Batch</th>
                 <th className="px-6 py-4 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest">Course</th>
@@ -136,6 +137,9 @@ const StudentList = ({
                   </td>
                   <td className="px-6 py-5">
                     <p className="text-indigo-400 text-xs font-mono font-bold tracking-tighter">{student.student_id}</p>
+                  </td>
+                  <td className="px-6 py-5">
+                    <span className="text-fuchsia-400 text-[10px] font-mono font-black tracking-widest bg-fuchsia-500/10 px-2 py-1 rounded-md border border-fuchsia-500/20">{student.pin || '----'}</span>
                   </td>
                   <td className="px-6 py-5">
                     <p className="text-white font-bold leading-tight">{student.name}</p>

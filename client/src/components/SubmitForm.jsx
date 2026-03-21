@@ -57,14 +57,30 @@ const SubmitForm = ({
             </div>
           </div>
 
-          <div>
-            <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 ml-1">Course Title</label>
-            <input
-              type="text"
-              className="w-full bg-slate-900/50 border border-slate-800 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-fuchsia-500/30 transition-all font-medium"
-              value={newStudent.course}
-              onChange={(e) => setNewStudent({...newStudent, course: e.target.value})}
-            />
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 ml-1">Course Title</label>
+              <input
+                type="text"
+                className="w-full bg-slate-900/50 border border-slate-800 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-fuchsia-500/30 transition-all font-medium"
+                value={newStudent.course}
+                onChange={(e) => setNewStudent({...newStudent, course: e.target.value})}
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 ml-1 flex justify-between">
+                <span>Secret PIN</span>
+                <span className="text-slate-600 text-[9px]">Optional (Auto if blank)</span>
+              </label>
+              <input
+                type="text"
+                placeholder="4-digit PIN"
+                maxLength={4}
+                className="w-full bg-slate-900/50 border border-slate-800 rounded-2xl px-5 py-4 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-fuchsia-500/30 transition-all font-medium font-mono"
+                value={newStudent.pin}
+                onChange={(e) => setNewStudent({...newStudent, pin: e.target.value})}
+              />
+            </div>
           </div>
 
           <div className="grid grid-cols-2 gap-4">

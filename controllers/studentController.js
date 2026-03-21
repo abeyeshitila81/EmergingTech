@@ -45,7 +45,7 @@ exports.togglePublicAccess = async (req, res) => {
 
 // Get result by name AND student ID
 exports.getResult = async (req, res) => {
-  const { name, id } = req.query;
+  const { name, id, pin } = req.query;
   const publicAccessSetting = await getSetting("public_access", false);
 
   if (!name || !id) {
@@ -65,7 +65,18 @@ exports.getResult = async (req, res) => {
     });
 
     if (result) {
-      res.json(result);
+      let responseData = result.toObject();
+      if (!result.has_logged_in && authHeader !== adminPassword) {
+        result.has_logged_in = true;
+        await result.save();
+        responseData.isFirstLogin = true;
+        responseData.generatedPin = result.pin;
+      } else if (authHeader !== adminPassword) {
+        if (!pin || result.pin !== pin) {
+          return res.status(401).json({ message: "Access Denied: Incorrect PIN. If this is your first time, leave the PIN blank." });
+        }
+      }
+      res.json(responseData);
     } else {
       res.status(404).json({ message: "Result not found for the given Name and ID" });
     }
@@ -97,7 +108,7 @@ exports.addOrUpdateResult = async (req, res) => {
     return res.status(401).json({ message: "Unauthorized: Admin access required" });
   }
   try {
-    const { student_id, name, course, department, batch, mid_exam, final_exam, quiz, assignment, comments } = req.body;
+    const { student_id, name, course, department, batch, mid_exam, final_exam, quiz, assignment, comments, pin } = req.body;
     
     if (!student_id || !name) {
       return res.status(400).json({ message: "Student ID and Name are required" });
@@ -142,6 +153,8 @@ exports.addOrUpdateResult = async (req, res) => {
       grade: grade,
       comments: comments !== undefined ? comments : (existingStudent?.comments || "")
     };
+
+    if (pin) updateData.pin = pin;
 
     if (combinedMid !== null) updateData.mid_exam = combinedMid;
     if (combinedFinal !== null) updateData.final_exam = combinedFinal;
