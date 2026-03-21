@@ -185,7 +185,7 @@ const StudentList = ({
                   </td>
                   {isAdmin && (
                     <td className="px-6 py-5">
-                      <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                      <div className="flex items-center justify-end gap-2">
                         <button
                           onClick={() => onEdit(student)}
                           className="p-2 bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 rounded-xl border border-indigo-500/20 transition-all hover:shadow-lg hover:shadow-indigo-500/10"
