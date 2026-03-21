@@ -14,8 +14,6 @@ const studentSchema = new mongoose.Schema({
   marks: Number,
   grade: String,
   comments: String,
-  pin: { type: String, default: () => Math.floor(1000 + Math.random() * 9000).toString() },
-  has_logged_in: { type: Boolean, default: false },
   createdAt: { type: Date, default: Date.now }
 });
 

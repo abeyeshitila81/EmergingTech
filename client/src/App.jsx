@@ -12,7 +12,6 @@ function App() {
   const [showLogin, setShowLogin] = useState(false);
   const [name, setName] = useState('');
   const [studentId, setStudentId] = useState('');
-  const [pin, setPin] = useState('');
   const [result, setResult] = useState(null);
   const [resultsList, setResultsList] = useState([]);
   const [error, setError] = useState('');
@@ -32,8 +31,7 @@ function App() {
     department: 'pharmacy',
     batch: '2016',
     grade: '',
-    comments: '',
-    pin: ''
+    comments: ''
   });
   const [submitSuccess, setSubmitSuccess] = useState('');
 
@@ -121,7 +119,7 @@ function App() {
       student_id: '', name: '', course: '', 
       department: 'pharmacy', batch: '2016', 
       mid_exam: '', final_exam: '', quiz: '', 
-      assignment: '', other: '', grade: '', comments: '', pin: '' 
+      assignment: '', other: '', grade: '', comments: '' 
     });
     setError('');
     setSubmitSuccess('');
@@ -131,7 +129,6 @@ function App() {
     setResult(null);
     setName('');
     setStudentId('');
-    setPin('');
     setError('');
   };
 
@@ -149,7 +146,7 @@ function App() {
     try {
       const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
       const apiBase = import.meta.env.VITE_API_BASE_URL || (isLocal ? `http://${window.location.hostname}:5001` : '');
-      const response = await fetch(`${apiBase}/result?name=${name}&id=${studentId}&pin=${pin}`);
+      const response = await fetch(`${apiBase}/result?name=${name}&id=${studentId}`);
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || 'Result not found');
@@ -218,27 +215,6 @@ function App() {
     }
   };
 
-  const handleResetPin = async (sid) => {
-    if (!window.confirm('Reset PIN for this student? They will receive a new PIN the next time they search.')) return;
-    setLoading(true);
-    try {
-      const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-      const apiBase = import.meta.env.VITE_API_BASE_URL || (isLocal ? `http://${window.location.hostname}:5001` : '');
-      const response = await fetch(`${apiBase}/reset-pin/${sid}`, {
-        method: 'POST',
-        headers: { 'x-admin-password': adminPassword }
-      });
-      if (!response.ok) throw new Error('Failed to reset PIN');
-      const data = await response.json();
-      alert(`PIN reset successfully!\nNew PIN: ${data.pin}\n\nThe student will see this PIN when they search for the first time.`);
-      fetchResults();
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const handleEdit = (student) => {
     setNewStudent({
       ...student,
@@ -249,8 +225,7 @@ function App() {
       other: student.other || '',
       department: student.department || 'pharmacy',
       batch: student.batch || '2016',
-      comments: student.comments || '',
-      pin: ''
+      comments: student.comments || ''
     });
     setIsEditing(true);
     setView('submit');
@@ -296,8 +271,6 @@ function App() {
               setName={setName}
               studentId={studentId}
               setStudentId={setStudentId}
-              pin={pin}
-              setPin={setPin}
               getResult={handleSearch}
               result={result}
               onBack={handleClearSearch}
@@ -340,7 +313,6 @@ function App() {
               fetchResults={fetchResults}
               onDelete={handleDelete}
               onEdit={handleEdit}
-              onResetPin={handleResetPin}
             />
           )}
         </div>

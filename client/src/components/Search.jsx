@@ -8,8 +8,6 @@ const Search = ({
   setName,
   studentId,
   setStudentId,
-  pin,
-  setPin,
   getResult,
   result,
   onBack
@@ -43,20 +41,6 @@ const Search = ({
                   onChange={(e) => setStudentId(e.target.value)}
                 />
               </div>
-              <div>
-                <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 ml-1 flex justify-between">
-                  <span>4-Digit PIN</span>
-                  <span className="text-cyan-500/80 text-[9px]">Optional on first login</span>
-                </label>
-                <input
-                  type="password"
-                  placeholder="••••"
-                  maxLength={4}
-                  className="w-full bg-slate-900/50 border border-slate-800 rounded-2xl px-5 py-4 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-cyan-500/30 transition-all font-medium tracking-widest font-mono"
-                  value={pin}
-                  onChange={(e) => setPin(e.target.value)}
-                />
-              </div>
             </div>
             <button
               type="submit"
@@ -84,27 +68,6 @@ const Search = ({
       {/* Result Display */}
       {result && (
         <div className="animate-in fade-in slide-in-from-bottom-8 duration-700 space-y-6">
-          {result.isFirstLogin && (
-            <div className="backdrop-blur-xl bg-cyan-500/10 p-6 md:p-8 rounded-[2.5rem] border-2 border-cyan-500/30 shadow-3xl relative overflow-hidden text-center scale-100 animate-in zoom-in-95 duration-500">
-              <div className="absolute -top-10 -right-10 w-32 h-32 bg-cyan-500/20 rounded-full blur-3xl mix-blend-screen"></div>
-              <div className="w-16 h-16 bg-cyan-500/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-cyan-500/40 shadow-xl shadow-cyan-500/20 relative z-10">
-                <svg className="w-8 h-8 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 00-2 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                </svg>
-              </div>
-              <h2 className="text-2xl md:text-3xl font-black text-white mb-2 relative z-10">Account Secured</h2>
-              <p className="text-slate-300 relative z-10 mb-6 max-w-sm mx-auto">This is your first time logging in. We have generated a unique secret PIN for your account.</p>
-
-              <div className="bg-slate-950/50 border border-cyan-500/30 rounded-2xl p-6 mb-6 mx-auto max-w-[200px] relative z-10">
-                <p className="text-[10px] font-black text-cyan-500 uppercase tracking-widest mb-2">Your Secret PIN</p>
-                <p className="text-4xl font-black text-white tracking-[0.2em] font-mono">{result.generatedPin}</p>
-              </div>
-
-              <p className="text-rose-400 font-bold text-sm relative z-10 bg-rose-500/10 py-3 px-4 rounded-xl inline-block border border-rose-500/20">
-                ⚠️ Please write this down. You will need it to view your results next time.
-              </p>
-            </div>
-          )}
 
           <div className="backdrop-blur-2xl bg-emerald-500/5 p-6 md:p-10 rounded-[2.5rem] border border-emerald-500/20 shadow-3xl overflow-hidden relative group">
             {/* Top Back Button - High Visibility */}

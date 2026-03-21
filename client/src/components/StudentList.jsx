@@ -8,8 +8,7 @@ const StudentList = ({
   error,
   fetchResults,
   onDelete,
-  onEdit,
-  onResetPin
+  onEdit
 }) => {
   const [deptFilter, setDeptFilter] = useState('all');
   const [batchFilter, setBatchFilter] = useState('all');
@@ -116,7 +115,6 @@ const StudentList = ({
               <tr className="border-b border-white/10 bg-white/5">
                 <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest w-12 text-center">#</th>
                 <th className="px-6 py-4 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest">ID</th>
-                <th className="px-6 py-4 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest">PIN</th>
                 <th className="px-6 py-4 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest">Student</th>
                 <th className="px-6 py-4 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest">Dept/Batch</th>
                 <th className="px-6 py-4 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest">Course</th>
@@ -138,9 +136,6 @@ const StudentList = ({
                   </td>
                   <td className="px-6 py-5">
                     <p className="text-indigo-400 text-xs font-mono font-bold tracking-tighter">{student.student_id}</p>
-                  </td>
-                  <td className="px-6 py-5">
-                    <span className="text-fuchsia-400 text-[10px] font-mono font-black tracking-widest bg-fuchsia-500/10 px-2 py-1 rounded-md border border-fuchsia-500/20">{student.pin || '----'}</span>
                   </td>
                   <td className="px-6 py-5">
                     <p className="text-white font-bold leading-tight">{student.name}</p>
@@ -192,15 +187,6 @@ const StudentList = ({
                           title="Edit Student"
                         >
                           <Edit2 className="w-3.5 h-3.5" />
-                        </button>
-                        <button
-                          onClick={() => onResetPin(student.student_id)}
-                          className="p-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 rounded-xl border border-amber-500/20 transition-all hover:shadow-lg hover:shadow-amber-500/10"
-                          title="Reset PIN"
-                        >
-                          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
-                          </svg>
                         </button>
                         <button
                           onClick={() => onDelete(student.student_id)}

@@ -45,7 +45,7 @@ exports.togglePublicAccess = async (req, res) => {
 
 // Get result by name AND student ID
 exports.getResult = async (req, res) => {
-  const { name, id, pin } = req.query;
+  const { name, id } = req.query;
   const publicAccessSetting = await getSetting("public_access", false);
 
   if (!name || !id) {
@@ -66,19 +66,6 @@ exports.getResult = async (req, res) => {
 
     if (result) {
       let responseData = result.toObject();
-      if (!result.has_logged_in && authHeader !== adminPassword) {
-        if (!result.pin) {
-          result.pin = Math.floor(1000 + Math.random() * 9000).toString();
-        }
-        result.has_logged_in = true;
-        await result.save();
-        responseData.isFirstLogin = true;
-        responseData.generatedPin = result.pin;
-      } else if (authHeader !== adminPassword) {
-        if (!pin || result.pin !== pin) {
-          return res.status(401).json({ message: "Access Denied: Incorrect PIN. If this is your first time, leave the PIN blank." });
-        }
-      }
       res.json(responseData);
     } else {
       res.status(404).json({ message: "Result not found for the given Name and ID" });
@@ -111,7 +98,7 @@ exports.addOrUpdateResult = async (req, res) => {
     return res.status(401).json({ message: "Unauthorized: Admin access required" });
   }
   try {
-    const { student_id, name, course, department, batch, mid_exam, final_exam, quiz, assignment, other, comments, pin, generateNewPin } = req.body;
+    const { student_id, name, course, department, batch, mid_exam, final_exam, quiz, assignment, other, comments } = req.body;
     
     if (!student_id || !name) {
       return res.status(400).json({ message: "Student ID and Name are required" });
@@ -160,18 +147,6 @@ exports.addOrUpdateResult = async (req, res) => {
       comments: comments !== undefined ? comments : (existingStudent?.comments || "")
     };
 
-    if (pin) {
-      // Admin explicitly set a PIN
-      updateData.pin = pin;
-    } else if (existingStudent && existingStudent.pin) {
-      // Keep the existing PIN unchanged
-      updateData.pin = existingStudent.pin;
-    } else {
-      // New student with no PIN — auto-generate one
-      updateData.pin = Math.floor(1000 + Math.random() * 9000).toString();
-      updateData.has_logged_in = false;
-    }
-
     if (combinedMid !== null) updateData.mid_exam = combinedMid;
     if (combinedFinal !== null) updateData.final_exam = combinedFinal;
     if (combinedQuiz !== null) updateData.quiz = combinedQuiz;
@@ -208,25 +183,3 @@ exports.deleteResult = async (req, res) => {
   }
 };
 
-// Reset PIN for a student (admin only)
-exports.resetPin = async (req, res) => {
-  const authHeader = req.headers['x-admin-password'];
-  if (authHeader !== adminPassword) {
-    return res.status(401).json({ message: "Unauthorized: Admin access required" });
-  }
-  try {
-    const { id } = req.params;
-    const newPin = Math.floor(1000 + Math.random() * 9000).toString();
-    const result = await Student.findOneAndUpdate(
-      { student_id: id },
-      { $set: { pin: newPin, has_logged_in: false } },
-      { new: true }
-    );
-    if (!result) {
-      return res.status(404).json({ message: "Student not found" });
-    }
-    res.json({ message: "PIN reset successfully", pin: newPin, data: result });
-  } catch (err) {
-    res.status(500).json({ message: "Error resetting PIN", error: err.message });
-  }
-};
