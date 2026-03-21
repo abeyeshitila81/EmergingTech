@@ -67,6 +67,9 @@ exports.getResult = async (req, res) => {
     if (result) {
       let responseData = result.toObject();
       if (!result.has_logged_in && authHeader !== adminPassword) {
+        if (!result.pin) {
+          result.pin = Math.floor(1000 + Math.random() * 9000).toString();
+        }
         result.has_logged_in = true;
         await result.save();
         responseData.isFirstLogin = true;
