@@ -112,9 +112,14 @@ const SubmitForm = ({
 
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 ml-1">Mid Exam</label>
+              <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 ml-1 flex justify-between">
+                <span>Mid Exam</span>
+                <span className="text-slate-600 text-[9px]">out of 20</span>
+              </label>
               <input
                 type="number"
+                min={0}
+                max={20}
                 className="w-full bg-slate-900/50 border border-slate-800 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-fuchsia-500/30 transition-all font-medium"
                 value={newStudent.mid_exam}
                 onChange={(e) => setNewStudent({...newStudent, mid_exam: e.target.value})}
@@ -142,9 +147,14 @@ const SubmitForm = ({
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 ml-1">Final Exam</label>
+              <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 ml-1 flex justify-between">
+                <span>Final Exam</span>
+                <span className="text-slate-600 text-[9px]">out of 40</span>
+              </label>
               <input
                 type="number"
+                min={0}
+                max={40}
                 className="w-full bg-slate-900/50 border border-slate-800 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-fuchsia-500/30 transition-all font-medium"
                 value={newStudent.final_exam}
                 onChange={(e) => setNewStudent({...newStudent, final_exam: e.target.value})}

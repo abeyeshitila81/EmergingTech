@@ -120,9 +120,9 @@ const StudentList = ({
                 <th className="px-6 py-4 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest">Student</th>
                 <th className="px-6 py-4 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest">Dept/Batch</th>
                 <th className="px-6 py-4 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest">Course</th>
-                <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Mid</th>
+                <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Mid<span className="text-slate-600">/20</span></th>
                 <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Quiz</th>
-                <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Final</th>
+                <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Final<span className="text-slate-600">/40</span></th>
                 <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-right">Total</th>
                 <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Grade</th>
                 {isAdmin && <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center whitespace-nowrap">Actions</th>}

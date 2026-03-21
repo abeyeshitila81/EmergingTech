@@ -94,12 +94,12 @@ const Search = ({
               </div>
               <h2 className="text-2xl md:text-3xl font-black text-white mb-2 relative z-10">Account Secured</h2>
               <p className="text-slate-300 relative z-10 mb-6 max-w-sm mx-auto">This is your first time logging in. We have generated a unique secret PIN for your account.</p>
-              
+
               <div className="bg-slate-950/50 border border-cyan-500/30 rounded-2xl p-6 mb-6 mx-auto max-w-[200px] relative z-10">
                 <p className="text-[10px] font-black text-cyan-500 uppercase tracking-widest mb-2">Your Secret PIN</p>
                 <p className="text-4xl font-black text-white tracking-[0.2em] font-mono">{result.generatedPin}</p>
               </div>
-              
+
               <p className="text-rose-400 font-bold text-sm relative z-10 bg-rose-500/10 py-3 px-4 rounded-xl inline-block border border-rose-500/20">
                 ⚠️ Please write this down. You will need it to view your results next time.
               </p>
@@ -174,10 +174,10 @@ const Search = ({
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 md:gap-4">
                 <div className="bg-slate-900/40 p-4 rounded-2xl border border-white/5 flex flex-col items-center text-center">
                   <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-1">Mid Exam</span>
-                  <span className="text-lg md:text-xl font-bold text-white">{result.mid_exam ?? '---'}</span>
+                  <span className="text-lg md:text-xl font-bold text-white">{result.mid_exam ?? '---'}<span className="text-[10px] text-slate-500 ml-0.5 font-bold">/20</span></span>
                 </div>
                 <div className="bg-slate-900/40 p-4 rounded-2xl border border-white/5 flex flex-col items-center text-center">
-                  <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-1">Quiz</span>
+                  <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-1">Quiz/Attendance</span>
                   <span className="text-lg md:text-xl font-bold text-white">{result.quiz ?? '---'}</span>
                 </div>
                 <div className="bg-slate-900/40 p-4 rounded-2xl border border-white/5 flex flex-col items-center text-center col-span-2 sm:col-span-1">
@@ -189,7 +189,7 @@ const Search = ({
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
                 <div className="bg-slate-900/40 p-4 rounded-2xl border border-white/5 flex flex-col items-center text-center">
                   <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-1">Final Exam</span>
-                  <span className="text-lg md:text-xl font-bold text-white">{(result.final_exam !== undefined && result.final_exam !== null) ? result.final_exam : '---'}</span>
+                  <span className="text-lg md:text-xl font-bold text-white">{(result.final_exam !== undefined && result.final_exam !== null) ? result.final_exam : '---'}<span className="text-[10px] text-slate-500 ml-0.5 font-bold">/40</span></span>
                 </div>
                 <div className="bg-gradient-to-br from-cyan-500/20 to-blue-600/20 p-4 rounded-2xl border border-cyan-500/20 flex flex-col items-center text-center">
                   <span className="text-[9px] font-black text-cyan-500 uppercase tracking-widest mb-1">Total Score</span>
