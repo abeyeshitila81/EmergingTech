@@ -10,6 +10,7 @@ const studentSchema = new mongoose.Schema({
   final_exam: Number,
   quiz: Number,
   assignment: Number,
+  other: Number,
   marks: Number,
   grade: String,
   comments: String,

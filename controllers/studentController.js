@@ -111,7 +111,7 @@ exports.addOrUpdateResult = async (req, res) => {
     return res.status(401).json({ message: "Unauthorized: Admin access required" });
   }
   try {
-    const { student_id, name, course, department, batch, mid_exam, final_exam, quiz, assignment, comments, pin, generateNewPin } = req.body;
+    const { student_id, name, course, department, batch, mid_exam, final_exam, quiz, assignment, other, comments, pin, generateNewPin } = req.body;
     
     if (!student_id || !name) {
       return res.status(400).json({ message: "Student ID and Name are required" });
@@ -123,17 +123,20 @@ exports.addOrUpdateResult = async (req, res) => {
     const final = parseFloat(final_exam);
     const q = parseFloat(quiz);
     const a = parseFloat(assignment);
+    const o = parseFloat(other);
     
-    const combinedMid = !isNaN(mid) ? mid : (existingStudent?.mid_exam || null);
-    const combinedFinal = !isNaN(final) ? final : (existingStudent?.final_exam || null);
-    const combinedQuiz = !isNaN(q) ? q : (existingStudent?.quiz || null);
-    const combinedAssignment = !isNaN(a) ? a : (existingStudent?.assignment || null);
+    const combinedMid = !isNaN(mid) ? mid : (existingStudent?.mid_exam ?? null);
+    const combinedFinal = !isNaN(final) ? final : (existingStudent?.final_exam ?? null);
+    const combinedQuiz = !isNaN(q) ? q : (existingStudent?.quiz ?? null);
+    const combinedAssignment = !isNaN(a) ? a : (existingStudent?.assignment ?? null);
+    const combinedOther = !isNaN(o) ? o : (existingStudent?.other ?? null);
 
     let totalMarks = 0;
     if (combinedMid !== null) totalMarks += combinedMid;
     if (combinedFinal !== null) totalMarks += combinedFinal;
     if (combinedQuiz !== null) totalMarks += combinedQuiz;
     if (combinedAssignment !== null) totalMarks += combinedAssignment;
+    if (combinedOther !== null) totalMarks += combinedOther;
 
     let grade = 'Pending';
     if (combinedFinal !== null) {
@@ -173,6 +176,7 @@ exports.addOrUpdateResult = async (req, res) => {
     if (combinedFinal !== null) updateData.final_exam = combinedFinal;
     if (combinedQuiz !== null) updateData.quiz = combinedQuiz;
     if (combinedAssignment !== null) updateData.assignment = combinedAssignment;
+    if (combinedOther !== null) updateData.other = combinedOther;
 
     const result = await Student.findOneAndUpdate(
       { student_id },

@@ -1,6 +1,6 @@
 import React from 'react';
 import { GraduationCap } from 'lucide-react';
-import { generateResultPDF } from '../utils/pdfGenerator';
+//import { generateResultPDF } from '../utils/pdfGenerator';
 const Search = ({
   loading,
   error,

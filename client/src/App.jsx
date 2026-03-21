@@ -28,6 +28,7 @@ function App() {
     final_exam: '',
     quiz: '',
     assignment: '',
+    other: '',
     department: 'pharmacy',
     batch: '2016',
     grade: '',
@@ -120,7 +121,7 @@ function App() {
       student_id: '', name: '', course: '', 
       department: 'pharmacy', batch: '2016', 
       mid_exam: '', final_exam: '', quiz: '', 
-      assignment: '', grade: '', comments: '', pin: '' 
+      assignment: '', other: '', grade: '', comments: '', pin: '' 
     });
     setError('');
     setSubmitSuccess('');
@@ -245,6 +246,7 @@ function App() {
       final_exam: student.final_exam || '',
       quiz: student.quiz || '',
       assignment: student.assignment || '',
+      other: student.other || '',
       department: student.department || 'pharmacy',
       batch: student.batch || '2016',
       comments: student.comments || '',

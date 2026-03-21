@@ -37,10 +37,10 @@ export const generateResultPDF = (result) => {
   // Scores Table
   const tableData = [
     ["Component", "Score / Max"],
-    ["Mid Exam", `${result.mid_exam ?? '--'} / 30`],
-    ["Quiz", `${result.quiz ?? '--'} / 10`],
-    ["Assignment", `${result.assignment ?? '--'} / 10`],
-    ["Final Exam", `${result.final_exam ?? '--'} / 50`],
+    ["Mid Exam", `${result.mid_exam ?? '--'} / 20`],
+    ["Quiz", `${result.quiz ?? '--'} / 5`],
+    ["Assignment", `${result.assignment ?? '--'} / 15`],
+    ["Final Exam", `${result.final_exam ?? '--'} / 40`],
     ["Total Score", `${result.marks} / 100`],
     ["Final Grade", result.grade]
   ];
