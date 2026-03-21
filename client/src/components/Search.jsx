@@ -1,6 +1,6 @@
 import React from 'react';
 import { GraduationCap } from 'lucide-react';
-//import { generateResultPDF } from '../utils/pdfGenerator';
+import { generateResultPDF } from '../utils/pdfGenerator';
 const Search = ({
   loading,
   error,
@@ -141,15 +141,7 @@ const Search = ({
               </div>
 
               <div className="flex flex-wrap gap-2">
-                <button
-                  onClick={() => generateResultPDF(result)}
-                  className="bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-all text-[9px] font-black px-3 py-1.5 rounded-full border border-emerald-500/30 uppercase tracking-widest flex items-center"
-                >
-                  <svg className="w-3 h-3 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                  </svg>
-                  PDF
-                </button>
+
                 <div className="bg-emerald-500/20 text-emerald-400 text-[9px] font-black px-3 py-1.5 rounded-full border border-emerald-500/30 uppercase tracking-widest whitespace-nowrap">
                   Verified
                 </div>
