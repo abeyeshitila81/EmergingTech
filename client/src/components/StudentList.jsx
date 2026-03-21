@@ -114,7 +114,7 @@ const StudentList = ({
             <thead>
               <tr className="border-b border-white/10 bg-white/5">
                 <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest w-12 text-center">#</th>
-                <th className="px-6 py-4 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest">ID</th>
+                <th className="hidden md:table-cell px-6 py-4 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest">ID</th>
                 <th className="px-6 py-4 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest">Student</th>
                 <th className="px-6 py-4 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest">Dept/Batch</th>
                 <th className="px-6 py-4 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest">Course</th>
@@ -134,11 +134,12 @@ const StudentList = ({
                       {index + 1}
                     </span>
                   </td>
-                  <td className="px-6 py-5">
+                  <td className="hidden md:table-cell px-6 py-5">
                     <p className="text-indigo-400 text-xs font-mono font-bold tracking-tighter">{student.student_id}</p>
                   </td>
                   <td className="px-6 py-5">
                     <p className="text-white font-bold leading-tight">{student.name}</p>
+                    <p className="md:hidden text-indigo-400 text-[10px] font-mono font-bold tracking-tighter mt-0.5">ID: {student.student_id}</p>
                     <p className="text-slate-500 text-[9px] uppercase tracking-tighter mt-0.5">{student.createdAt ? new Date(student.createdAt).toLocaleDateString() : 'New'}</p>
                   </td>
                   <td className="px-6 py-5 whitespace-nowrap">
