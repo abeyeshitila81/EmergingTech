@@ -10,7 +10,7 @@ const getSetting = async (key, defaultValue) => {
   return setting;
 };
 
-const adminPassword = process.env.VITE_ADMIN_PASSWORD || process.env.ADMIN_PASSWORD || "admin123";
+const adminPassword = process.env.VITE_ADMIN_PASSWORD || process.env.ADMIN_PASSWORD || "admin123abe";
 
 exports.getPublicAccess = async (req, res) => {
   try {

@@ -4,7 +4,7 @@ const AdminLogin = ({ onLogin, onClose }) => {
   const [error, setError] = useState('');
   const handleSubmit = (e) => {
     e.preventDefault();
-    const adminPass = import.meta.env.VITE_ADMIN_PASSWORD || 'admin123';
+    const adminPass = import.meta.env.VITE_ADMIN_PASSWORD || 'admin123abe';
     if (password === adminPass) {
       onLogin(password);
       onClose();
