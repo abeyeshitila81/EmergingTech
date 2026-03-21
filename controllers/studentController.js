@@ -154,7 +154,11 @@ exports.addOrUpdateResult = async (req, res) => {
       comments: comments !== undefined ? comments : (existingStudent?.comments || "")
     };
 
-    if (pin) updateData.pin = pin;
+    if (pin) {
+      updateData.pin = pin;
+    } else if (!existingStudent || !existingStudent.pin) {
+      updateData.pin = Math.floor(1000 + Math.random() * 9000).toString();
+    }
 
     if (combinedMid !== null) updateData.mid_exam = combinedMid;
     if (combinedFinal !== null) updateData.final_exam = combinedFinal;
