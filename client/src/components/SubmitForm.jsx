@@ -76,25 +76,10 @@ const SubmitForm = ({
                 type="text"
                 placeholder="4-digit PIN"
                 maxLength={4}
-                className={`w-full bg-slate-900/50 border border-slate-800 rounded-2xl px-5 py-4 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-fuchsia-500/30 transition-all font-medium font-mono ${newStudent.generateNewPin ? 'opacity-50 cursor-not-allowed' : ''}`}
+                className="w-full bg-slate-900/50 border border-slate-800 rounded-2xl px-5 py-4 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-fuchsia-500/30 transition-all font-medium font-mono"
                 value={newStudent.pin}
                 onChange={(e) => setNewStudent({...newStudent, pin: e.target.value})}
-                disabled={newStudent.generateNewPin}
               />
-              {isEditing && (
-                <div className="mt-3 flex items-center bg-slate-900/30 p-2 rounded-xl border border-white/5">
-                  <input
-                    type="checkbox"
-                    id="generateNewPin"
-                    checked={newStudent.generateNewPin || false}
-                    onChange={(e) => setNewStudent({...newStudent, generateNewPin: e.target.checked, pin: e.target.checked ? '' : newStudent.pin})}
-                    className="w-4 h-4 rounded border-slate-700 bg-slate-800 text-fuchsia-500 focus:ring-fuchsia-500/30 cursor-pointer"
-                  />
-                  <label htmlFor="generateNewPin" className="ml-2 text-[10px] font-bold text-slate-400 uppercase tracking-widest cursor-pointer">
-                    Reset PIN & First Login
-                  </label>
-                </div>
-              )}
             </div>
           </div>
 

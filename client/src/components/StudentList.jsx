@@ -8,7 +8,8 @@ const StudentList = ({
   error,
   fetchResults,
   onDelete,
-  onEdit
+  onEdit,
+  onResetPin
 }) => {
   const [deptFilter, setDeptFilter] = useState('all');
   const [batchFilter, setBatchFilter] = useState('all');
@@ -191,6 +192,15 @@ const StudentList = ({
                           title="Edit Student"
                         >
                           <Edit2 className="w-3.5 h-3.5" />
+                        </button>
+                        <button
+                          onClick={() => onResetPin(student.student_id)}
+                          className="p-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 rounded-xl border border-amber-500/20 transition-all hover:shadow-lg hover:shadow-amber-500/10"
+                          title="Reset PIN"
+                        >
+                          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                          </svg>
                         </button>
                         <button
                           onClick={() => onDelete(student.student_id)}

@@ -8,5 +8,6 @@ router.get("/public-access", studentController.getPublicAccess);
 router.post("/toggle-public-access", studentController.togglePublicAccess);
 router.post("/add", studentController.addOrUpdateResult);
 router.delete("/delete/:id", studentController.deleteResult);
+router.post("/reset-pin/:id", studentController.resetPin);
 
 module.exports = router;

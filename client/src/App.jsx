@@ -32,8 +32,7 @@ function App() {
     batch: '2016',
     grade: '',
     comments: '',
-    pin: '',
-    generateNewPin: false
+    pin: ''
   });
   const [submitSuccess, setSubmitSuccess] = useState('');
 
@@ -121,7 +120,7 @@ function App() {
       student_id: '', name: '', course: '', 
       department: 'pharmacy', batch: '2016', 
       mid_exam: '', final_exam: '', quiz: '', 
-      assignment: '', grade: '', comments: '', pin: '', generateNewPin: false 
+      assignment: '', grade: '', comments: '', pin: '' 
     });
     setError('');
     setSubmitSuccess('');
@@ -218,6 +217,27 @@ function App() {
     }
   };
 
+  const handleResetPin = async (sid) => {
+    if (!window.confirm('Reset PIN for this student? They will receive a new PIN the next time they search.')) return;
+    setLoading(true);
+    try {
+      const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+      const apiBase = import.meta.env.VITE_API_BASE_URL || (isLocal ? `http://${window.location.hostname}:5001` : '');
+      const response = await fetch(`${apiBase}/reset-pin/${sid}`, {
+        method: 'POST',
+        headers: { 'x-admin-password': adminPassword }
+      });
+      if (!response.ok) throw new Error('Failed to reset PIN');
+      const data = await response.json();
+      alert(`PIN reset successfully!\nNew PIN: ${data.pin}\n\nThe student will see this PIN when they search for the first time.`);
+      fetchResults();
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleEdit = (student) => {
     setNewStudent({
       ...student,
@@ -228,8 +248,7 @@ function App() {
       department: student.department || 'pharmacy',
       batch: student.batch || '2016',
       comments: student.comments || '',
-      pin: student.pin || '',
-      generateNewPin: false
+      pin: ''
     });
     setIsEditing(true);
     setView('submit');
@@ -319,6 +338,7 @@ function App() {
               fetchResults={fetchResults}
               onDelete={handleDelete}
               onEdit={handleEdit}
+              onResetPin={handleResetPin}
             />
           )}
         </div>

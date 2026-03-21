@@ -157,12 +157,14 @@ exports.addOrUpdateResult = async (req, res) => {
       comments: comments !== undefined ? comments : (existingStudent?.comments || "")
     };
 
-    if (generateNewPin) {
-      updateData.pin = Math.floor(1000 + Math.random() * 9000).toString();
-      updateData.has_logged_in = false;
-    } else if (pin) {
+    if (pin) {
+      // Admin explicitly set a PIN
       updateData.pin = pin;
-    } else if (!existingStudent || !existingStudent.pin) {
+    } else if (existingStudent && existingStudent.pin) {
+      // Keep the existing PIN unchanged
+      updateData.pin = existingStudent.pin;
+    } else {
+      // New student with no PIN — auto-generate one
       updateData.pin = Math.floor(1000 + Math.random() * 9000).toString();
       updateData.has_logged_in = false;
     }
@@ -199,5 +201,28 @@ exports.deleteResult = async (req, res) => {
     res.json({ message: "Student record deleted successfully" });
   } catch (err) {
     res.status(500).json({ message: "Error deleting record", error: err.message });
+  }
+};
+
+// Reset PIN for a student (admin only)
+exports.resetPin = async (req, res) => {
+  const authHeader = req.headers['x-admin-password'];
+  if (authHeader !== adminPassword) {
+    return res.status(401).json({ message: "Unauthorized: Admin access required" });
+  }
+  try {
+    const { id } = req.params;
+    const newPin = Math.floor(1000 + Math.random() * 9000).toString();
+    const result = await Student.findOneAndUpdate(
+      { student_id: id },
+      { $set: { pin: newPin, has_logged_in: false } },
+      { new: true }
+    );
+    if (!result) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+    res.json({ message: "PIN reset successfully", pin: newPin, data: result });
+  } catch (err) {
+    res.status(500).json({ message: "Error resetting PIN", error: err.message });
   }
 };
