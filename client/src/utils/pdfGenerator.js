@@ -1,5 +1,5 @@
-import jsPDF from 'jspdf';
-import 'jspdf-autotable';
+import { jsPDF } from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 export const generateResultPDF = (result) => {
   const doc = new jsPDF();
@@ -45,7 +45,7 @@ export const generateResultPDF = (result) => {
     ["Final Grade", result.grade]
   ];
 
-  doc.autoTable({
+  autoTable(doc, {
     startY: 75,
     head: [tableData[0]],
     body: tableData.slice(1),
