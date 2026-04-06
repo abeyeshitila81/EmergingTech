@@ -67,7 +67,7 @@ const SubmitForm = ({
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-3 gap-4">
             <div>
               <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 ml-1">Department</label>
               <select
@@ -92,18 +92,29 @@ const SubmitForm = ({
                 <option value="2020">2020</option>
               </select>
             </div>
+            <div>
+              <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 ml-1">Privacy Status</label>
+              <select
+                value={newStudent.visibility}
+                onChange={(e) => setNewStudent({ ...newStudent, visibility: e.target.value })}
+                className="w-full bg-slate-900/50 border border-slate-800 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-fuchsia-500/30 transition-all font-medium appearance-none"
+              >
+                <option value="public">Public</option>
+                <option value="private">Private</option>
+              </select>
+            </div>
           </div>
 
           <div className="grid grid-cols-3 gap-4">
             <div>
               <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 ml-1 flex justify-between">
                 <span>Mid Exam</span>
-                <span className="text-slate-600 text-[9px]">out of 20</span>
+                <span className="text-slate-600 text-[9px]">out of 30</span>
               </label>
               <input
                 type="number"
                 min={0}
-                max={20}
+                max={30}
                 className="w-full bg-slate-900/50 border border-slate-800 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-fuchsia-500/30 transition-all font-medium"
                 value={newStudent.mid_exam}
                 onChange={(e) => setNewStudent({...newStudent, mid_exam: e.target.value})}
@@ -112,12 +123,12 @@ const SubmitForm = ({
             <div>
               <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 ml-1 flex justify-between">
                 <span>Quiz / Attendance</span>
-                <span className="text-slate-600 text-[9px]">out of 5</span>
+                <span className="text-slate-600 text-[9px]">out of 10</span>
               </label>
               <input
                 type="number"
                 min={0}
-                max={5}
+                max={10}
                 className="w-full bg-slate-900/50 border border-slate-800 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-fuchsia-500/30 transition-all font-medium"
                 value={newStudent.quiz}
                 onChange={(e) => setNewStudent({...newStudent, quiz: e.target.value})}
@@ -126,20 +137,6 @@ const SubmitForm = ({
             <div>
               <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 ml-1 flex justify-between">
                 <span>Assignment</span>
-                <span className="text-slate-600 text-[9px]">out of 15</span>
-              </label>
-              <input
-                type="number"
-                min={0}
-                max={15}
-                className="w-full bg-slate-900/50 border border-slate-800 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-fuchsia-500/30 transition-all font-medium"
-                value={newStudent.assignment}
-                onChange={(e) => setNewStudent({...newStudent, assignment: e.target.value})}
-              />
-            </div>
-            <div>
-              <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 ml-1 flex justify-between">
-                <span>Other</span>
                 <span className="text-slate-600 text-[9px]">out of 20</span>
               </label>
               <input
@@ -147,10 +144,11 @@ const SubmitForm = ({
                 min={0}
                 max={20}
                 className="w-full bg-slate-900/50 border border-slate-800 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-fuchsia-500/30 transition-all font-medium"
-                value={newStudent.other}
-                onChange={(e) => setNewStudent({...newStudent, other: e.target.value})}
+                value={newStudent.assignment}
+                onChange={(e) => setNewStudent({...newStudent, assignment: e.target.value})}
               />
             </div>
+
           </div>
 
           <div className="grid grid-cols-2 gap-4">

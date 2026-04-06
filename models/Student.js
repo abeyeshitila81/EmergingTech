@@ -10,10 +10,10 @@ const studentSchema = new mongoose.Schema({
   final_exam: Number,
   quiz: Number,
   assignment: Number,
-  other: Number,
   marks: Number,
   grade: String,
   comments: String,
+  visibility: { type: String, enum: ['public', 'private'], default: 'public' },
   createdAt: { type: Date, default: Date.now }
 });
 

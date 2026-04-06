@@ -52,11 +52,8 @@ exports.getResult = async (req, res) => {
     return res.status(400).json({ message: "Name and ID are required" });
   }
 
-  // If system is private, only admin can search (or if admin header is present)
-  const authHeader = req.headers['x-admin-password'];
-  if (authHeader !== adminPassword && !publicAccessSetting.value) {
-    return res.status(403).json({ message: "Access Restricted: Result lookup is currently private." });
-  }
+  // Individual result logic: Always accessible for students
+  // Search is no longer disabled in Private mode.
 
   try {
     const result = await Student.findOne({
@@ -79,9 +76,11 @@ exports.getResult = async (req, res) => {
 exports.getAllResults = async (req, res) => {
   const authHeader = req.headers['x-admin-password'];
   
-  // Strictly Admin-Only for the full directory
-  if (authHeader !== adminPassword) {
-    return res.status(401).json({ message: "Unauthorized: Admin access required" });
+  const publicAccessSetting = await getSetting("public_access", false);
+
+  // Allow if Admin OR if Directory is marked as Public
+  if (authHeader !== adminPassword && !publicAccessSetting.value) {
+    return res.status(401).json({ message: "Unauthorized: Directory access is currently private" });
   }
   try {
     const results = await Student.find().sort({ createdAt: -1 });
@@ -98,7 +97,7 @@ exports.addOrUpdateResult = async (req, res) => {
     return res.status(401).json({ message: "Unauthorized: Admin access required" });
   }
   try {
-    const { student_id, name, course, department, batch, mid_exam, final_exam, quiz, assignment, other, comments } = req.body;
+    const { student_id, name, course, department, batch, mid_exam, final_exam, quiz, assignment, comments, visibility } = req.body;
     
     if (!student_id || !name) {
       return res.status(400).json({ message: "Student ID and Name are required" });
@@ -110,20 +109,17 @@ exports.addOrUpdateResult = async (req, res) => {
     const final = parseFloat(final_exam);
     const q = parseFloat(quiz);
     const a = parseFloat(assignment);
-    const o = parseFloat(other);
     
     const combinedMid = !isNaN(mid) ? mid : (existingStudent?.mid_exam ?? null);
     const combinedFinal = !isNaN(final) ? final : (existingStudent?.final_exam ?? null);
     const combinedQuiz = !isNaN(q) ? q : (existingStudent?.quiz ?? null);
     const combinedAssignment = !isNaN(a) ? a : (existingStudent?.assignment ?? null);
-    const combinedOther = !isNaN(o) ? o : (existingStudent?.other ?? null);
 
     let totalMarks = 0;
     if (combinedMid !== null) totalMarks += combinedMid;
     if (combinedFinal !== null) totalMarks += combinedFinal;
     if (combinedQuiz !== null) totalMarks += combinedQuiz;
     if (combinedAssignment !== null) totalMarks += combinedAssignment;
-    if (combinedOther !== null) totalMarks += combinedOther;
 
     let grade = 'Pending';
     if (combinedFinal !== null) {
@@ -144,14 +140,14 @@ exports.addOrUpdateResult = async (req, res) => {
       batch: batch || existingStudent?.batch || '2016',
       marks: totalMarks,
       grade: grade,
-      comments: comments !== undefined ? comments : (existingStudent?.comments || "")
+      comments: comments !== undefined ? comments : (existingStudent?.comments || ""),
+      visibility: visibility || existingStudent?.visibility || 'public'
     };
 
     if (combinedMid !== null) updateData.mid_exam = combinedMid;
     if (combinedFinal !== null) updateData.final_exam = combinedFinal;
     if (combinedQuiz !== null) updateData.quiz = combinedQuiz;
     if (combinedAssignment !== null) updateData.assignment = combinedAssignment;
-    if (combinedOther !== null) updateData.other = combinedOther;
 
     const result = await Student.findOneAndUpdate(
       { student_id },

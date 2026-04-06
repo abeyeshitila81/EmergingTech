@@ -129,15 +129,15 @@ const Search = ({
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 md:gap-4">
                 <div className="bg-slate-900/40 p-4 rounded-2xl border border-white/5 flex flex-col items-center text-center">
                   <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-1">Mid Exam</span>
-                  <span className="text-lg md:text-xl font-bold text-white">{result.mid_exam ?? '---'}<span className="text-[10px] text-slate-500 ml-0.5 font-bold">/20</span></span>
+                  <span className="text-lg md:text-xl font-bold text-white">{result.mid_exam ?? '---'}<span className="text-[10px] text-slate-500 ml-0.5 font-bold">/30</span></span>
                 </div>
                 <div className="bg-slate-900/40 p-4 rounded-2xl border border-white/5 flex flex-col items-center text-center">
                   <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-1">Quiz/Attendance</span>
-                  <span className="text-lg md:text-xl font-bold text-white">{result.quiz ?? '---'}</span>
+                  <span className="text-lg md:text-xl font-bold text-white">{result.quiz ?? '---'}<span className="text-[10px] text-slate-500 ml-0.5 font-bold">/10</span></span>
                 </div>
                 <div className="bg-slate-900/40 p-4 rounded-2xl border border-white/5 flex flex-col items-center text-center col-span-2 sm:col-span-1">
                   <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-1">Assignment</span>
-                  <span className="text-lg md:text-xl font-bold text-white">{result.assignment ?? '---'}</span>
+                  <span className="text-lg md:text-xl font-bold text-white">{result.assignment ?? '---'}<span className="text-[10px] text-slate-500 ml-0.5 font-bold">/20</span></span>
                 </div>
               </div>
 

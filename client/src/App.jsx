@@ -27,11 +27,11 @@ function App() {
     final_exam: '',
     quiz: '',
     assignment: '',
-    other: '',
     department: 'pharmacy',
     batch: '2016',
     grade: '',
-    comments: ''
+    comments: '',
+    visibility: 'public'
   });
   const [submitSuccess, setSubmitSuccess] = useState('');
 
@@ -82,10 +82,10 @@ function App() {
 
   // Redirect if view becomes restricted
   useEffect(() => {
-    if (view === 'list' && !isAdmin) {
+    if (view === 'list' && !isAdmin && !publicAccess) {
       setView('search');
     }
-  }, [view, isAdmin]);
+  }, [view, isAdmin, publicAccess]);
 
   // Fetch all results when view changes to 'list'
   useEffect(() => {
@@ -119,7 +119,7 @@ function App() {
       student_id: '', name: '', course: '', 
       department: 'pharmacy', batch: '2016', 
       mid_exam: '', final_exam: '', quiz: '', 
-      assignment: '', other: '', grade: '', comments: '' 
+      assignment: '', grade: '', comments: '', visibility: 'public' 
     });
     setError('');
     setSubmitSuccess('');
@@ -222,10 +222,10 @@ function App() {
       final_exam: student.final_exam || '',
       quiz: student.quiz || '',
       assignment: student.assignment || '',
-      other: student.other || '',
       department: student.department || 'pharmacy',
       batch: student.batch || '2016',
-      comments: student.comments || ''
+      comments: student.comments || '',
+      visibility: student.visibility || 'public'
     });
     setIsEditing(true);
     setView('submit');
@@ -233,7 +233,7 @@ function App() {
 
   return (
     <div className="min-h-screen p-6 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 font-sans flex flex-col justify-start">
-      <div className={`w-full mx-auto py-6 md:py-12 transition-all duration-700 ${view === 'list' ? 'max-w-[100%] px-2 md:px-6' : 'max-w-4xl px-4'}`}>
+      <div className={`w-full mx-auto py-6 md:py-12 transition-all duration-700 ${view === 'list' ? 'max-w-[98%] md:max-w-[95%] px-1 md:px-4' : 'max-w-4xl px-4'}`}>
         <Header 
           view={view} 
           setView={setView} 
@@ -263,7 +263,7 @@ function App() {
         )}
 
         <div className={`w-full mx-auto transition-all duration-700 ${view === 'list' ? 'max-w-full' : 'max-w-3xl'}`}>
-          {view === 'search' && (isAdmin || publicAccess) && (
+          {view === 'search' && (
             <Search 
               loading={loading}
               error={error}
@@ -275,16 +275,6 @@ function App() {
               result={result}
               onBack={handleClearSearch}
             />
-          )}
-
-          {view === 'search' && !isAdmin && !publicAccess && (
-            <div className="text-center py-20 bg-white/5 rounded-[2.5rem] border border-white/10 border-dashed animate-in fade-in duration-500">
-              <div className="w-16 h-16 bg-rose-500/10 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-rose-500/20">
-                <span className="text-2xl">🔒</span>
-              </div>
-              <h3 className="text-xl font-bold text-white mb-2">Search Restricted</h3>
-              <p className="text-slate-400 max-w-xs mx-auto">Individual result lookup is currently private. Please check back later or contact the administrator.</p>
-            </div>
           )}
 
           {view === 'submit' && isAdmin && (
@@ -304,7 +294,7 @@ function App() {
             />
           )}
 
-          {view === 'list' && isAdmin && (
+          {view === 'list' && (isAdmin || publicAccess) && (
             <StudentList 
               isAdmin={isAdmin}
               loading={loading}

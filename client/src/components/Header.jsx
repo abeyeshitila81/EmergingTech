@@ -69,21 +69,21 @@ const Header = ({ view, setView, isAdmin, publicAccess, onTogglePublicAccess, on
           </button>
           
           
-          {isAdmin && (
-            <>
+          {(isAdmin || publicAccess) && (
               <button
                 onClick={() => setView('list')}
                 className={`px-6 py-2.5 rounded-xl text-sm font-black transition-all ${view === 'list' ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg shadow-emerald-500/25' : 'text-slate-500 hover:text-slate-300'}`}
               >
                 DIRECTORY
               </button>
+          )}
+          {isAdmin && (
               <button
                 onClick={() => setView('submit')}
                 className={`px-6 py-2.5 rounded-xl text-sm font-black transition-all ${view === 'submit' ? 'bg-gradient-to-r from-fuchsia-500 to-purple-500 text-white shadow-lg shadow-fuchsia-500/25' : 'text-slate-500 hover:text-slate-300'}`}
               >
                 SUBMIT
               </button>
-            </>
           )}
         </div>
       </div>
