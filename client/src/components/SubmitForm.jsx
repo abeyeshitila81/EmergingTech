@@ -51,56 +51,84 @@ const SubmitForm = ({
             />
           </div>
 
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 ml-1">Department</label>
+              <input
+                type="text"
+                className="w-full bg-slate-900/50 border border-slate-800 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-fuchsia-500/30 transition-all font-medium"
+                value={newStudent.department}
+                onChange={(e) => setNewStudent({...newStudent, department: e.target.value})}
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 ml-1">Batch (Year)</label>
+              <input
+                type="text"
+                className="w-full bg-slate-900/50 border border-slate-800 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-fuchsia-500/30 transition-all font-medium"
+                value={newStudent.batch}
+                onChange={(e) => setNewStudent({...newStudent, batch: e.target.value})}
+              />
+            </div>
+          </div>
+
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 ml-1 text-fuchsia-400">Mid Exam / 30</label>
+              <label className="block text-[10px] font-black text-fuchsia-400 uppercase tracking-widest mb-2 ml-1">Mid / 20</label>
               <input
                 type="number"
-                max="30"
+                max="20"
                 min="0"
-                placeholder="0-30"
-                className="w-full bg-slate-900/50 border border-fuchsia-500/20 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-fuchsia-500/30 transition-all font-medium"
+                className="w-full bg-slate-900/50 border border-fuchsia-500/20 rounded-2xl px-4 py-4 text-white focus:outline-none focus:ring-2 focus:ring-fuchsia-500/30 transition-all font-medium"
                 value={newStudent.mid_exam}
                 onChange={(e) => setNewStudent({...newStudent, mid_exam: e.target.value})}
               />
             </div>
             <div>
-              <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 ml-1 text-emerald-400">Final Exam / 40</label>
-              <input
-                type="number"
-                max="40"
-                min="0"
-                placeholder="0-40"
-                className="w-full bg-slate-900/50 border border-emerald-500/20 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/30 transition-all font-medium"
-                value={newStudent.final_exam}
-                onChange={(e) => setNewStudent({...newStudent, final_exam: e.target.value})}
-              />
-            </div>
-            <div>
-              <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 ml-1 text-fuchsia-400">Quiz / 10</label>
+              <label className="block text-[10px] font-black text-fuchsia-400 uppercase tracking-widest mb-2 ml-1">Quiz / 10</label>
               <input
                 type="number"
                 max="10"
                 min="0"
-                placeholder="0-10"
-                className="w-full bg-slate-900/50 border border-fuchsia-500/20 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-fuchsia-500/30 transition-all font-medium"
+                className="w-full bg-slate-900/50 border border-fuchsia-500/20 rounded-2xl px-4 py-4 text-white focus:outline-none focus:ring-2 focus:ring-fuchsia-500/30 transition-all font-medium"
                 value={newStudent.quiz}
                 onChange={(e) => setNewStudent({...newStudent, quiz: e.target.value})}
               />
             </div>
-          </div>
-
-          <div className="grid grid-cols-1 gap-4">
             <div>
-              <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 ml-1 text-cyan-400">Assignment / 20</label>
+              <label className="block text-[10px] font-black text-cyan-400 uppercase tracking-widest mb-2 ml-1">Asgn / 20</label>
               <input
                 type="number"
                 max="20"
                 min="0"
-                placeholder="0-20"
-                className="w-full bg-slate-900/50 border border-cyan-500/20 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500/30 transition-all font-medium"
+                className="w-full bg-slate-900/50 border border-cyan-500/20 rounded-2xl px-4 py-4 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500/30 transition-all font-medium"
                 value={newStudent.assignment}
                 onChange={(e) => setNewStudent({...newStudent, assignment: e.target.value})}
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-[10px] font-black text-cyan-400 uppercase tracking-widest mb-2 ml-1">Other / 10</label>
+              <input
+                type="number"
+                max="10"
+                min="0"
+                className="w-full bg-slate-900/50 border border-cyan-500/20 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500/30 transition-all font-medium"
+                value={newStudent.other_scores}
+                onChange={(e) => setNewStudent({...newStudent, other_scores: e.target.value})}
+              />
+            </div>
+            <div>
+              <label className="block text-[10px] font-black text-emerald-400 uppercase tracking-widest mb-2 ml-1">Final / 40</label>
+              <input
+                type="number"
+                max="40"
+                min="0"
+                className="w-full bg-slate-900/50 border border-emerald-500/20 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/30 transition-all font-medium"
+                value={newStudent.final_exam}
+                onChange={(e) => setNewStudent({...newStudent, final_exam: e.target.value})}
               />
             </div>
           </div>

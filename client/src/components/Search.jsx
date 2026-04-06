@@ -69,8 +69,18 @@ const Search = ({
 
               <div className="grid grid-cols-2 gap-6">
                 <div className="bg-slate-950/50 p-6 rounded-3xl border border-white/5">
-                  <p className="text-slate-500 text-[10px] uppercase font-black tracking-widest mb-2">Academic Course</p>
+                  <p className="text-slate-500 text-[10px] uppercase font-black tracking-widest mb-1">Academic Course</p>
                   <p className="text-white text-lg font-bold">{result.course}</p>
+                  <div className="flex gap-4 mt-2 border-t border-white/5 pt-2">
+                    <div>
+                      <p className="text-slate-600 text-[8px] uppercase font-black tracking-widest">Dept</p>
+                      <p className="text-slate-300 text-xs font-bold">{result.department || '---'}</p>
+                    </div>
+                    <div>
+                      <p className="text-slate-600 text-[8px] uppercase font-black tracking-widest">Batch</p>
+                      <p className="text-slate-300 text-xs font-bold">{result.batch || '---'}</p>
+                    </div>
+                  </div>
                 </div>
                 <div className="bg-slate-950/50 p-6 rounded-3xl border border-white/5 flex flex-col items-center justify-center">
                   <p className="text-slate-500 text-[10px] uppercase font-black tracking-widest mb-1">Final Grade</p>
@@ -79,29 +89,34 @@ const Search = ({
                   </p>
                 </div>
               </div>
-              <div className="grid grid-cols-5 gap-3">
-                <div className="bg-slate-900/40 p-4 rounded-2xl border border-white/5 flex flex-col items-center">
-                  <span className="text-[10px] font-black text-fuchsia-500 uppercase tracking-widest mb-1">Mid / 30</span>
-                  <span className="text-xl font-bold text-white">{result.mid_exam ?? '---'}</span>
+              <div className="grid grid-cols-5 gap-2">
+                <div className="bg-slate-900/40 p-3 rounded-2xl border border-white/5 flex flex-col items-center">
+                  <span className="text-[8px] font-black text-fuchsia-500 uppercase tracking-widest mb-1 text-center">Mid / 20</span>
+                  <span className="text-lg font-bold text-white">{result.mid_exam ?? '---'}</span>
                 </div>
-                <div className="bg-slate-900/40 p-4 rounded-2xl border border-white/5 flex flex-col items-center">
-                  <span className="text-[10px] font-black text-emerald-500 uppercase tracking-widest mb-1">Final / 40</span>
-                  <span className="text-xl font-bold text-white">{(result.final_exam !== undefined && result.final_exam !== null) ? result.final_exam : '---'}</span>
+                <div className="bg-slate-900/40 p-3 rounded-2xl border border-white/5 flex flex-col items-center">
+                  <span className="text-[8px] font-black text-emerald-500 uppercase tracking-widest mb-1 text-center">Final / 40</span>
+                  <span className="text-lg font-bold text-white">{result.final_exam !== null ? result.final_exam : '---'}</span>
                 </div>
-                <div className="bg-slate-900/40 p-4 rounded-2xl border border-white/5 flex flex-col items-center">
-                  <span className="text-[10px] font-black text-fuchsia-500 uppercase tracking-widest mb-1">Quiz / 10</span>
-                  <span className="text-xl font-bold text-white">{result.quiz ?? '---'}</span>
+                <div className="bg-slate-900/40 p-3 rounded-2xl border border-white/5 flex flex-col items-center">
+                  <span className="text-[8px] font-black text-fuchsia-500 uppercase tracking-widest mb-1 text-center">Quiz / 10</span>
+                  <span className="text-lg font-bold text-white">{result.quiz ?? '---'}</span>
                 </div>
-                <div className="bg-slate-900/40 p-4 rounded-2xl border border-white/5 flex flex-col items-center">
-                  <span className="text-[10px] font-black text-cyan-500 uppercase tracking-widest mb-1">Asgn / 20</span>
-                  <span className="text-xl font-bold text-white">{result.assignment ?? '---'}</span>
+                <div className="bg-slate-900/40 p-3 rounded-2xl border border-white/5 flex flex-col items-center">
+                  <span className="text-[8px] font-black text-cyan-500 uppercase tracking-widest mb-1 text-center">Asgn / 20</span>
+                  <span className="text-lg font-bold text-white">{result.assignment ?? '---'}</span>
                 </div>
-                <div className="bg-gradient-to-br from-cyan-500/20 to-blue-600/20 p-4 rounded-2xl border border-cyan-500/20 flex flex-col items-center">
-                  <span className="text-[10px] font-black text-cyan-500 uppercase tracking-widest mb-1">Total</span>
-                  <span className={`text-xl font-black ${result.grade === 'Pending' ? 'text-slate-500' : 'text-white'}`}>
-                    {result.grade === 'Pending' ? '---' : result.marks}/100
-                  </span>
+                <div className="bg-slate-900/40 p-3 rounded-2xl border border-white/5 flex flex-col items-center">
+                  <span className="text-[8px] font-black text-cyan-500 uppercase tracking-widest mb-1 text-center">Other / 10</span>
+                  <span className="text-lg font-bold text-white">{result.other_scores ?? '---'}</span>
                 </div>
+              </div>
+              <div className="bg-gradient-to-r from-cyan-500/10 to-blue-600/10 p-5 rounded-3xl border border-cyan-500/20 flex justify-between items-center mt-4">
+                <span className="text-xs font-black text-cyan-500 uppercase tracking-widest">Total Weighted Score</span>
+                <span className={`text-3xl font-black ${result.grade === 'Pending' ? 'text-slate-500' : 'text-white'}`}>
+                  {result.grade === 'Pending' ? '---' : result.marks}
+                  <span className="text-sm font-bold text-slate-500 ml-1">/ 100</span>
+                </span>
               </div>
               {result.comments && (
                 <div className="bg-slate-950/30 p-6 rounded-3xl border border-white/5 mt-4">

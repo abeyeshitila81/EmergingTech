@@ -20,11 +20,14 @@ function App() {
     student_id: '',
     name: '',
     course: '',
+    department: '',
+    batch: '',
     mid_exam: '',
     final_exam: '',
     quiz: '',
     assignment: '',
-    grade: '',
+    other_scores: '',
+    grade: 'Pending',
     comments: ''
   });
   const [submitSuccess, setSubmitSuccess] = useState('');
@@ -99,7 +102,20 @@ function App() {
       }
 
       setSubmitSuccess('Student result added successfully!');
-      setNewStudent({ student_id: '', name: '', course: '', mid_exam: '', final_exam: '', quiz: '', assignment: '', grade: '', comments: '' });
+      setNewStudent({ 
+        student_id: '', 
+        name: '', 
+        course: '', 
+        department: '',
+        batch: '',
+        mid_exam: '', 
+        final_exam: '', 
+        quiz: '', 
+        assignment: '', 
+        other_scores: '',
+        grade: 'Pending', 
+        comments: '' 
+      });
     } catch (err) {
       setError(err.message);
     } finally {
