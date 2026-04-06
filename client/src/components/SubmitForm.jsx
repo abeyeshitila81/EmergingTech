@@ -16,7 +16,7 @@ const SubmitForm = ({
         
         <h3 className="text-2xl font-black text-white mb-8 relative z-10 flex items-center">
           <span className="w-8 h-8 bg-fuchsia-500 rounded-lg mr-3 flex items-center justify-center text-sm shadow-lg shadow-fuchsia-500/40 text-white">✓</span>
-          New Achievement Registry
+          Add / Update Registry
         </h3>
 
         <form onSubmit={handleAddResult} className="relative z-10 space-y-5">
@@ -137,7 +137,7 @@ const SubmitForm = ({
             disabled={loading}
             className="w-full bg-gradient-to-r from-fuchsia-600 to-purple-600 hover:scale-[1.02] active:scale-[0.98] text-white font-black py-4.5 rounded-2xl shadow-xl shadow-fuchsia-900/20 transition-all mt-4"
           >
-            {loading ? 'Submitting...' : 'REGISTER ACHIEVEMENT'}
+            {loading ? 'Submitting...' : 'SAVE ACHIEVEMENT DATA'}
           </button>
         </form>
 

@@ -146,6 +146,21 @@ app.post("/add", async (req, res) => {
   }
 });
 
+// Delete result
+app.delete("/delete/:student_id", async (req, res) => {
+  try {
+    const { student_id } = req.params;
+    const result = await Student.findOneAndDelete({ student_id });
+    if (result) {
+      res.json({ message: "Result deleted successfully" });
+    } else {
+      res.status(404).json({ message: "Result not found" });
+    }
+  } catch (err) {
+    res.status(500).json({ message: "Error deleting result", error: err.message });
+  }
+});
+
 const PORT = 5001;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

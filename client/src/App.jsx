@@ -121,6 +121,46 @@ function App() {
     }
   };
 
+  const handleDeleteResult = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this record?")) return;
+    
+    setLoading(true);
+    setError('');
+    
+    try {
+      const apiBase = import.meta.env.VITE_API_BASE_URL || `http://${window.location.hostname}:5001`;
+      const response = await fetch(`${apiBase}/delete/${id}`, { method: 'DELETE' });
+      
+      if (!response.ok) {
+        throw new Error('Failed to delete result');
+      }
+      
+      fetchResults();
+    } catch (err) {
+      setError(err.message);
+      setLoading(false); // Only set to false on error, fetchResults sets to false on success/try
+    }
+  };
+
+  const handleEditResult = (student) => {
+    setNewStudent({
+      student_id: student.student_id || '',
+      name: student.name || '',
+      course: student.course || '',
+      department: student.department || '',
+      batch: student.batch || '',
+      mid_exam: student.mid_exam ?? '',
+      final_exam: student.final_exam ?? '',
+      quiz: student.quiz ?? '',
+      assignment: student.assignment ?? '',
+      grade: student.grade || 'Pending',
+      comments: student.comments || ''
+    });
+    setSubmitSuccess('');
+    setError('');
+    setView('submit');
+  };
+
   return (
     <div className="min-h-screen p-6 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 font-sans">
       <div className="max-w-4xl mx-auto py-12">
@@ -173,6 +213,8 @@ function App() {
               error={error}
               resultsList={resultsList}
               fetchResults={fetchResults}
+              onEdit={handleEditResult}
+              onDelete={handleDeleteResult}
             />
           )}
         </div>
