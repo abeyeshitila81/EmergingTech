@@ -26,7 +26,6 @@ function App() {
     final_exam: '',
     quiz: '',
     assignment: '',
-    other_scores: '',
     grade: 'Pending',
     comments: ''
   });
@@ -112,7 +111,6 @@ function App() {
         final_exam: '', 
         quiz: '', 
         assignment: '', 
-        other_scores: '',
         grade: 'Pending', 
         comments: '' 
       });

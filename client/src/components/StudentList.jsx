@@ -40,11 +40,10 @@ const StudentList = ({
                 <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-left">ID</th>
                 <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-left">Course</th>
                 <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Date Added</th>
-                <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Mid/20</th>
+                <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Mid/30</th>
                 <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Final/40</th>
                 <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Quiz/10</th>
                 <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Asgn/20</th>
-                <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Other/10</th>
                 <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-right">Total</th>
                 <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Grade</th>
               </tr>
@@ -74,7 +73,7 @@ const StudentList = ({
                   <td className="px-6 py-4 text-center">
                     <span className="text-[10px] font-black text-fuchsia-400 bg-fuchsia-500/5 px-2 py-1 rounded-md border border-fuchsia-500/10">
                       {item.mid_exam ?? '---'}
-                      <span className="text-[8px] opacity-40 ml-0.5">/20</span>
+                      <span className="text-[8px] opacity-40 ml-0.5">/30</span>
                     </span>
                   </td>
                   <td className="px-6 py-4 text-center">
@@ -93,12 +92,6 @@ const StudentList = ({
                     <span className="text-[10px] font-black text-cyan-400 bg-cyan-500/5 px-2 py-1 rounded-md border border-cyan-500/10">
                       {item.assignment ?? '---'}
                       <span className="text-[8px] opacity-40 ml-0.5">/20</span>
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 text-center">
-                    <span className="text-[10px] font-black text-cyan-400 bg-cyan-500/5 px-2 py-1 rounded-md border border-cyan-500/10">
-                      {item.other_scores ?? '---'}
-                      <span className="text-[8px] opacity-40 ml-0.5">/10</span>
                     </span>
                   </td>
                   <td className="px-6 py-4 text-right">

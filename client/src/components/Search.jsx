@@ -89,26 +89,22 @@ const Search = ({
                   </p>
                 </div>
               </div>
-              <div className="grid grid-cols-5 gap-2">
-                <div className="bg-slate-900/40 p-3 rounded-2xl border border-white/5 flex flex-col items-center">
-                  <span className="text-[8px] font-black text-fuchsia-500 uppercase tracking-widest mb-1 text-center">Mid / 20</span>
-                  <span className="text-lg font-bold text-white">{result.mid_exam ?? '---'}</span>
+              <div className="grid grid-cols-4 gap-3">
+                <div className="bg-slate-900/40 p-4 rounded-2xl border border-white/5 flex flex-col items-center">
+                  <span className="text-[10px] font-black text-fuchsia-500 uppercase tracking-widest mb-1 text-center">Mid / 30</span>
+                  <span className="text-xl font-bold text-white">{result.mid_exam ?? '---'}</span>
                 </div>
-                <div className="bg-slate-900/40 p-3 rounded-2xl border border-white/5 flex flex-col items-center">
-                  <span className="text-[8px] font-black text-emerald-500 uppercase tracking-widest mb-1 text-center">Final / 40</span>
-                  <span className="text-lg font-bold text-white">{result.final_exam !== null ? result.final_exam : '---'}</span>
+                <div className="bg-slate-900/40 p-4 rounded-2xl border border-white/5 flex flex-col items-center">
+                  <span className="text-[10px] font-black text-emerald-500 uppercase tracking-widest mb-1 text-center">Final / 40</span>
+                  <span className="text-xl font-bold text-white">{result.final_exam !== null ? result.final_exam : '---'}</span>
                 </div>
-                <div className="bg-slate-900/40 p-3 rounded-2xl border border-white/5 flex flex-col items-center">
-                  <span className="text-[8px] font-black text-fuchsia-500 uppercase tracking-widest mb-1 text-center">Quiz / 10</span>
-                  <span className="text-lg font-bold text-white">{result.quiz ?? '---'}</span>
+                <div className="bg-slate-900/40 p-4 rounded-2xl border border-white/5 flex flex-col items-center">
+                  <span className="text-[10px] font-black text-fuchsia-500 uppercase tracking-widest mb-1 text-center">Quiz / 10</span>
+                  <span className="text-xl font-bold text-white">{result.quiz ?? '---'}</span>
                 </div>
-                <div className="bg-slate-900/40 p-3 rounded-2xl border border-white/5 flex flex-col items-center">
-                  <span className="text-[8px] font-black text-cyan-500 uppercase tracking-widest mb-1 text-center">Asgn / 20</span>
-                  <span className="text-lg font-bold text-white">{result.assignment ?? '---'}</span>
-                </div>
-                <div className="bg-slate-900/40 p-3 rounded-2xl border border-white/5 flex flex-col items-center">
-                  <span className="text-[8px] font-black text-cyan-500 uppercase tracking-widest mb-1 text-center">Other / 10</span>
-                  <span className="text-lg font-bold text-white">{result.other_scores ?? '---'}</span>
+                <div className="bg-slate-900/40 p-4 rounded-2xl border border-white/5 flex flex-col items-center">
+                  <span className="text-[10px] font-black text-cyan-500 uppercase tracking-widest mb-1 text-center">Asgn / 20</span>
+                  <span className="text-xl font-bold text-white">{result.assignment ?? '---'}</span>
                 </div>
               </div>
               <div className="bg-gradient-to-r from-cyan-500/10 to-blue-600/10 p-5 rounded-3xl border border-cyan-500/20 flex justify-between items-center mt-4">

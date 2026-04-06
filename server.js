@@ -29,7 +29,6 @@ const studentSchema = new mongoose.Schema({
   final_exam: Number,
   quiz: Number,
   assignment: Number,
-  other_scores: Number,
   marks: Number,
   grade: String,
   comments: String,
@@ -75,7 +74,7 @@ app.get("/results", async (req, res) => {
 // Add or Update result
 app.post("/add", async (req, res) => {
   try {
-    const { student_id, name, course, department, batch, mid_exam, final_exam, quiz, assignment, other_scores, comments } = req.body;
+    const { student_id, name, course, department, batch, mid_exam, final_exam, quiz, assignment, comments } = req.body;
     
     if (!student_id || !name) {
       return res.status(400).json({ message: "Student ID and Name are required" });
@@ -86,8 +85,8 @@ app.post("/add", async (req, res) => {
 
     // 2. Parse scores (prioritizing new inputs, falling back to existing)
     const mid = parseFloat(mid_exam);
-    if (!isNaN(mid) && (mid < 0 || mid > 20)) {
-      return res.status(400).json({ message: "Mid Exam score must be between 0 and 20" });
+    if (!isNaN(mid) && (mid < 0 || mid > 30)) {
+      return res.status(400).json({ message: "Mid Exam score must be between 0 and 30" });
     }
     const final = parseFloat(final_exam);
     if (!isNaN(final) && (final < 0 || final > 40)) {
@@ -104,18 +103,11 @@ app.post("/add", async (req, res) => {
       return res.status(400).json({ message: "Assignment score must be between 0 and 20" });
     }
 
-    // Other scores validation (0-10)
-    const other = parseFloat(other_scores);
-    if (!isNaN(other) && (other < 0 || other > 10)) {
-      return res.status(400).json({ message: "Other score must be between 0 and 10" });
-    }
-    
     // Determine combined scores
     const combinedMid = !isNaN(mid) ? mid : (existingStudent?.mid_exam || null);
     const combinedFinal = !isNaN(final) ? final : (existingStudent?.final_exam || null);
     const combinedQuiz = !isNaN(qz) ? qz : (existingStudent?.quiz || null);
     const combinedAsgn = !isNaN(asgn) ? asgn : (existingStudent?.assignment || null);
-    const combinedOther = !isNaN(other) ? other : (existingStudent?.other_scores || null);
 
     // 3. Calculate total marks
     let totalMarks = 0;
@@ -123,7 +115,6 @@ app.post("/add", async (req, res) => {
     if (combinedFinal !== null) totalMarks += combinedFinal;
     if (combinedQuiz !== null) totalMarks += combinedQuiz;
     if (combinedAsgn !== null) totalMarks += combinedAsgn;
-    if (combinedOther !== null) totalMarks += combinedOther;
 
     // 4. Set Grade to 'Pending' for all
     let grade = 'Pending';
@@ -142,7 +133,6 @@ app.post("/add", async (req, res) => {
     if (combinedFinal !== null) updateData.final_exam = combinedFinal;
     if (combinedQuiz !== null) updateData.quiz = combinedQuiz;
     if (combinedAsgn !== null) updateData.assignment = combinedAsgn;
-    if (combinedOther !== null) updateData.other_scores = combinedOther;
 
     const result = await Student.findOneAndUpdate(
       { student_id },
