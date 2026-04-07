@@ -1,24 +1,13 @@
-import React, { useState } from 'react';
-import { RefreshCcw, Edit2, Trash2, CheckCircle, Info } from 'lucide-react';
+import React from 'react';
 
-const StudentList = ({
-  isAdmin,
-  resultsList,
-  loading,
-  error,
+const StudentList = ({ 
+  loading, 
+  error, 
+  resultsList, 
   fetchResults,
-  onDelete,
-  onEdit
+  onEdit,
+  onDelete
 }) => {
-  const [deptFilter, setDeptFilter] = useState('all');
-  const [batchFilter, setBatchFilter] = useState('all');
-
-  const filteredResults = resultsList.filter(student => {
-    const matchesDept = deptFilter === 'all' ? true : student.department === deptFilter;
-    const matchesBatch = batchFilter === 'all' ? true : student.batch === batchFilter;
-    return matchesDept && matchesBatch;
-  });
-
   return (
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-8 duration-500">
       <div className="flex flex-col gap-6 mb-8">
@@ -93,20 +82,14 @@ const StudentList = ({
         </div>
       </div>
 
-      {error && (
-        <div className="bg-rose-500/10 border border-rose-500/20 rounded-2xl p-4 text-rose-400 text-sm font-medium text-center animate-in fade-in">
-          ⚠️ {error}
-        </div>
-      )}
-
       {loading && resultsList.length === 0 ? (
         <div className="text-center py-20 bg-white/5 rounded-[2.5rem] border border-white/10 border-dashed">
-          <div className="inline-block w-8 h-8 border-4 border-indigo-500/30 border-t-indigo-500 rounded-full animate-spin mb-4"></div>
-          <p className="text-slate-500 font-bold uppercase tracking-widest text-[10px]">Retrieving Records...</p>
+          <div className="inline-block w-8 h-8 border-4 border-emerald-500/30 border-t-emerald-500 rounded-full animate-spin mb-4"></div>
+          <p className="text-slate-500 font-bold uppercase tracking-widest text-xs">Synchronizing Records...</p>
         </div>
       ) : resultsList.length === 0 ? (
         <div className="text-center py-20 bg-white/5 rounded-[2.5rem] border border-white/10 border-dashed">
-          <p className="text-slate-500 font-bold uppercase tracking-widest text-[10px]">No records match your filters</p>
+          <p className="text-slate-500 font-bold uppercase tracking-widest text-xs">No records found in database</p>
         </div>
       ) : (
         <div className="overflow-x-auto backdrop-blur-xl bg-white/5 rounded-3xl border border-white/10 shadow-3xl">
