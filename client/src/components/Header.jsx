@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Header = ({ view, setView, isAdmin, onLoginClick, onLogout }) => {
+const Header = ({ view, setView, isAdmin, publicAccess, onLoginClick, onLogout }) => {
   return (
     <div className="text-center mb-12">
       <div className="flex justify-between items-center mb-8">

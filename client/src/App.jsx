@@ -235,6 +235,7 @@ function App() {
           view={view} 
           setView={setView} 
           isAdmin={isAdmin}
+          publicAccess={publicAccess}
           onLoginClick={() => setShowLogin(true)}
           onLogout={() => {
             setIsAdmin(false);
