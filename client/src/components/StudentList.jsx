@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 
 const StudentList = ({ 
   loading, 
@@ -8,6 +8,17 @@ const StudentList = ({
   onEdit,
   onDelete
 }) => {
+  const [deptFilter, setDeptFilter] = useState('all');
+  const [batchFilter, setBatchFilter] = useState('all');
+
+  const filteredResults = useMemo(() => {
+    return resultsList.filter(student => {
+      const matchDept = deptFilter === 'all' || (student.department || 'pharmacy').toLowerCase() === deptFilter;
+      const matchBatch = batchFilter === 'all' || (student.batch || '2016') === batchFilter;
+      return matchDept && matchBatch;
+    });
+  }, [resultsList, deptFilter, batchFilter]);
+
   return (
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-8 duration-500">
       <div className="flex flex-col gap-6 mb-8">
@@ -21,7 +32,9 @@ const StudentList = ({
             className="bg-slate-800/50 hover:bg-slate-700/50 text-slate-300 p-2.5 rounded-xl border border-slate-700 transition-all self-end md:self-auto group"
             title="Refresh List"
           >
-            <RefreshCcw className={`w-5 h-5 ${loading ? 'animate-spin' : 'group-hover:rotate-180'} transition-all duration-500`} />
+            <svg className={`w-5 h-5 ${loading ? 'animate-spin' : 'group-hover:rotate-180'} transition-all duration-500`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
           </button>
         </div>
         
@@ -163,7 +176,10 @@ const StudentList = ({
                       {student.grade === 'Pending' ? '...' : student.grade}
                       {student.comments && (
                         <div className="absolute bottom-full mb-3 hidden group-hover/info:block w-56 bg-slate-900 border border-white/10 p-4 rounded-2xl text-[10px] text-slate-400 shadow-3xl z-50 pointer-events-none leading-relaxed backdrop-blur-xl">
-                          <p className="font-black text-emerald-400 uppercase tracking-widest mb-2 border-b border-white/5 pb-1 flex items-center gap-1.5"><Info className="w-3 h-3" /> Teacher Notes</p>
+                          <p className="font-black text-emerald-400 uppercase tracking-widest mb-2 border-b border-white/5 pb-1 flex items-center gap-1.5">
+                            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                             Teacher Notes
+                          </p>
                           {student.comments}
                         </div>
                       )}
@@ -177,14 +193,14 @@ const StudentList = ({
                           className="p-3 bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 rounded-2xl border border-indigo-500/20 transition-all hover:shadow-xl hover:shadow-indigo-500/20 hover:scale-110"
                           title="Edit Student"
                         >
-                          <Edit2 className="w-4 h-4" />
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
                         </button>
                         <button
                           onClick={() => onDelete(student.student_id)}
                           className="p-3 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 rounded-2xl border border-rose-500/20 transition-all hover:shadow-xl hover:shadow-rose-500/20 hover:scale-110"
                           title="Remove Record"
                         >
-                          <Trash2 className="w-4 h-4" />
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                         </button>
                       </div>
                     </td>
