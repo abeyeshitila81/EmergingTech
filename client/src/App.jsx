@@ -222,8 +222,6 @@ function App() {
       grade: student.grade || 'Pending',
       visibility: student.visibility || 'public'
     });
-
-    });
     setSubmitSuccess('');
     setError('');
     setView('submit');
